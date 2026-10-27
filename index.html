@@ -1,0 +1,1311 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Вопросы и ответы по релейной защите 6–35 кВ | ЭСТРА</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#00549F; --blue-dark:#004380; --blue-tint:#E8F0F8;
+  --text:#494A54; --head:#333333; --muted:#999999; --line:#E5E5E5;
+  --soft:#F0F3F4; --soft2:#F8F8F8; --red:#D0021B; --white:#FFFFFF;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--white);color:var(--text);font:400 16px/27px Montserrat,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+a:hover{color:var(--blue-dark)}
+.wrap{max-width:1348px;margin:0 auto;padding:0 32px}
+
+/* прототип */
+.proto{background:#333;color:#fff;font-size:13px;line-height:18px}
+.proto .wrap{display:flex;gap:16px;justify-content:space-between;align-items:center;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+.proto code{background:rgba(255,255,255,.12);padding:2px 8px;border-radius:4px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+
+/* шапка */
+header{border-bottom:1px solid var(--line);background:#fff;position:relative;z-index:5}
+.h-top{height:89px;display:flex;align-items:center;gap:40px}
+.logo{display:flex;align-items:center}
+.logo svg{width:76px;height:auto}
+.h-contacts{display:flex;align-items:center;gap:40px;margin-left:auto}
+.h-phone{font-weight:600;color:var(--head)}
+.h-mail{color:var(--text);font-size:14px;display:flex;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--blue);color:#fff;border:1px solid var(--blue);border-radius:26px;padding:9px 20px 10px;font:700 14.9px/21px Montserrat,Arial,sans-serif;cursor:pointer;transition:background .2s}
+.btn:hover{background:var(--blue-dark);color:#fff}
+.btn--white{background:#fff;color:var(--blue);border-color:#fff}
+.btn--white:hover{background:var(--blue-tint);color:var(--blue)}
+.btn--ghost{background:transparent;color:var(--blue)}
+.btn--ghost:hover{background:var(--blue-tint);color:var(--blue)}
+.h-nav{height:61px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line)}
+.h-nav a{color:var(--head);font-size:12.8px;font-weight:700;letter-spacing:.02em;text-transform:uppercase}
+.h-nav a:hover,.h-nav a.on{color:var(--blue)}
+.icon-btn{background:none;border:0;padding:6px;cursor:pointer;color:var(--head);display:flex}
+.burger{display:none}
+
+/* крошки и заголовок */
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:40px 0 16px;font-size:16px;color:var(--muted)}
+.crumbs a{color:var(--muted)}
+.crumbs a:hover{color:var(--blue)}
+.crumbs .sep{color:#ccc}
+h1{color:var(--head);font-size:44.8px;line-height:1.33;font-weight:700;margin:0 0 24px;max-width:1000px}
+h2{color:var(--head);font-size:28px;line-height:1.25;font-weight:700;margin:48px 0 20px}
+h3{color:var(--head);font-size:20px;line-height:1.35;font-weight:700;margin:0}
+.lead{font-size:18px;line-height:30px;max-width:900px;margin:0 0 36px}
+
+/* фильтр */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 32px}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid #CACACA;background:#fff;color:var(--head);border-radius:26px;padding:8px 18px;font:600 14px/20px Montserrat,Arial,sans-serif;cursor:pointer;transition:all .15s}
+.chip:hover{border-color:var(--blue);color:var(--blue)}
+.chip.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.chip .n{font-weight:500;opacity:.65}
+.tag{display:inline-block;border:1px solid #CACACA;border-radius:26px;padding:2px 12px;font-size:13px;line-height:20px;color:var(--text)}
+.tag:hover{border-color:var(--blue);color:var(--blue)}
+
+/* карточки вопросов */
+.qlist{display:grid;gap:16px;margin-bottom:32px}
+.pnav{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin:0 0 12px}
+.pnav-num,.pnav-btn{min-width:44px;height:44px;padding:0 6px;border:1px solid #CACACA;background:#fff;display:inline-flex;align-items:center;justify-content:center;color:var(--head);font-weight:600;font-size:16px;transition:border-color .15s,color .15s,background .15s}
+a.pnav-num:hover,a.pnav-btn:hover{border-color:var(--blue);color:var(--blue)}
+.pnav-num.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.pnav-btn{color:var(--blue)}
+.pnav-btn.off{color:#CACACA;border-color:var(--line)}
+.pnav-gap{min-width:24px;text-align:center;color:var(--muted)}
+.pnav-info{text-align:center;font-size:14px;color:var(--muted);margin:0 0 56px}
+.qcard{border:1px solid var(--line);background:#fff;padding:28px 32px;display:grid;gap:12px;transition:border-color .2s, box-shadow .2s;position:relative}
+.qcard:hover{border-color:var(--blue);box-shadow:0 8px 24px rgba(0,84,159,.08)}
+.qcard h2{font-size:21px;line-height:1.4;margin:0}
+.qcard h2 a{color:var(--head)}
+.qcard h2 a:hover{color:var(--blue)}
+.qcard p{margin:0;max-width:980px}
+.qmeta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;font-size:14px;color:var(--muted);margin-top:4px}
+.qcard h2 a::after{content:"";position:absolute;inset:0}
+.qmeta .tag{position:relative;z-index:1}
+.more{margin-left:auto;width:44px;height:44px;border:1px solid var(--blue);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:var(--blue);transition:background .2s,color .2s}
+.more svg{width:18px;height:18px;transition:transform .2s}
+.qcard:hover .more{background:var(--blue);color:#fff}
+.qcard:hover .more svg{transform:translateX(2px)}
+.badge-full{font-size:12px;font-weight:700;color:var(--blue);background:var(--blue-tint);border-radius:26px;padding:2px 10px}
+.empty{padding:40px;border:1px dashed #CACACA;text-align:center;color:var(--muted)}
+
+/* синий блок */
+.blue-panel{background:var(--blue);color:#fff;padding:56px 48px;margin:0 0 64px;display:grid;grid-template-columns:1fr 1.25fr;gap:48px}
+.blue-panel .kicker{font-size:14px;opacity:.85;margin-bottom:6px}
+.blue-panel h2{color:#fff;margin:0 0 16px;font-size:36px}
+.blue-panel p{margin:0;opacity:.9}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form .full{grid-column:1/-1}
+.field{display:block;width:100%;background:transparent;border:1px solid rgba(255,255,255,.55);color:#fff;font:400 15px/22px Montserrat,Arial,sans-serif;padding:14px 18px;outline:none;border-radius:0}
+.field::placeholder{color:rgba(255,255,255,.7)}
+.field:focus{border-color:#fff;background:rgba(255,255,255,.06)}
+textarea.field{min-height:116px;resize:vertical}
+.agree{display:flex;gap:10px;font-size:13px;line-height:19px;opacity:.9;align-items:flex-start}
+.agree input{margin-top:3px;accent-color:#fff}
+.form-row{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.form-note{font-size:13px;opacity:.85;min-height:19px}
+
+/* раскладка раздела поддержки */
+.layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:48px;align-items:start;margin-bottom:64px}
+.layout .support-bar{margin-bottom:0;margin-top:48px}
+.smenu{border:1px solid var(--line);border-radius:4px;list-style:none;margin:0;padding:0;background:#fff}
+.smenu li+li{border-top:1px solid var(--line)}
+.smenu a{display:block;padding:20px 32px;color:var(--head);font-size:16px;line-height:24px;position:relative}
+.smenu a:hover{color:var(--blue)}
+.smenu a.on{font-weight:700;color:var(--head)}
+.smenu a.on::before{content:"";position:absolute;left:-1px;top:50%;transform:translateY(-50%);width:3px;height:18px;background:var(--blue);border-radius:0 2px 2px 0}
+.qmain .author{margin-top:0}
+
+/* плашка техподдержки */
+.support-bar{background:#F8F8F8;border:1px solid var(--line);padding:40px 52px;margin:0 0 64px;display:flex;align-items:center;gap:28px}
+.sb-icon{flex:none;display:flex}
+.sb-icon svg{width:50px;height:auto}
+.sb-text{margin:0;flex:1;font-size:19px;line-height:30px;color:var(--text)}
+.sb-text a{font-weight:700;white-space:nowrap}
+.sb-btn{flex:none;padding:17px 36px;font-size:18px;line-height:22px;border-radius:40px}
+
+/* статьи */
+.cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:72px}
+.acard{border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:14px;color:var(--head);min-height:170px;transition:border-color .2s}
+.acard:hover{border-color:var(--blue);color:var(--head)}
+.acard .k{font-size:13px;color:var(--muted)}
+.acard b{font-size:16px;line-height:24px}
+.acard .go{margin-top:auto;color:var(--blue);font-weight:700;font-size:14px}
+
+/* страница вопроса */
+.qpage{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:56px;align-items:start;margin-bottom:64px}
+.author{display:flex;align-items:center;gap:14px;margin:0 0 32px;font-size:14px;line-height:21px;color:var(--muted)}
+.ava{width:44px;height:44px;border-radius:50%;background:var(--blue-tint);color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+.author b{color:var(--head);font-weight:600;display:block}
+.short{background:var(--soft);border-left:4px solid var(--blue);padding:24px 28px;margin:0 0 8px}
+.short .lbl{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--blue);margin-bottom:8px}
+.short p{margin:0;font-size:18px;line-height:30px;color:var(--head)}
+.body p{margin:0 0 18px}
+.body ol,.body ul{margin:0 0 20px;padding-left:24px}
+.body li{margin-bottom:10px}
+.body li::marker{color:var(--blue);font-weight:700}
+figure{margin:28px 0 32px;border:1px solid var(--line);padding:24px}
+figcaption{font-size:14px;color:var(--muted);margin-top:12px;line-height:21px}
+.tbl{width:100%;border-collapse:collapse;margin:0 0 24px;font-size:15px;line-height:22px}
+.tbl th{background:var(--blue);color:#fff;font-size:14px;font-weight:600;text-align:left;padding:12px 11px}
+.tbl td{padding:11px;vertical-align:top;border-bottom:1px solid var(--line)}
+.tbl tr:nth-child(even) td{background:var(--soft2)}
+.tbl-wrap{overflow-x:auto}
+.box-estra{border:1px solid var(--blue);padding:24px 28px;margin:32px 0}
+.box-estra h3{margin-bottom:10px;color:var(--blue);font-size:18px}
+.box-estra p{margin:0 0 14px}
+.box-estra .prods{display:flex;flex-wrap:wrap;gap:10px}
+.src{font-size:14px;line-height:22px;color:var(--muted);border-top:1px solid var(--line);padding-top:20px;margin-top:32px}
+.src ul{margin:6px 0 0;padding-left:18px}
+.pending{border:1px dashed #CACACA;padding:28px;color:var(--muted);margin:24px 0}
+.pending b{color:var(--head)}
+
+/* навигация вперёд-назад */
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:48px 0 12px}
+.pg{border:1px solid var(--line);padding:20px 24px;display:flex;flex-direction:column;gap:6px;color:var(--head);min-height:108px;transition:border-color .2s,background .2s}
+.pg:hover{border-color:var(--blue);background:var(--blue-tint);color:var(--head)}
+.pg .dir{font-size:13px;font-weight:700;color:var(--blue);display:flex;align-items:center;gap:8px}
+.pg b{font-size:16px;line-height:24px;font-weight:600}
+.pg.next{text-align:right;align-items:flex-end}
+.pg.next .dir{justify-content:flex-end}
+.pg.ghost{visibility:hidden}
+.pg .rub{font-size:12.5px;color:var(--muted)}
+.allq{display:flex;justify-content:center;margin:8px 0 0;font-weight:700;font-size:15px}
+.kbd{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+.kbd span{border:1px solid #CACACA;border-radius:4px;padding:0 6px;font-family:ui-monospace,Menlo,monospace}
+
+/* боковая колонка */
+aside{display:grid;gap:16px}
+.side{border:1px solid var(--line);padding:24px}
+.side h3{font-size:16px;margin-bottom:12px}
+.side ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.side li a{display:flex;justify-content:space-between;gap:10px;font-size:14px;line-height:20px;color:var(--text);padding:7px 0}
+.side li a:hover,.side li a.on{color:var(--blue)}
+.side li a.on{font-weight:700}
+.side .n{color:var(--muted);font-weight:400}
+.side-cta{background:var(--blue);color:#fff;padding:24px}
+.side-cta b{display:block;font-size:17px;line-height:25px;margin-bottom:8px}
+.side-cta p{font-size:14px;line-height:21px;margin:0 0 16px;opacity:.9}
+.related{display:grid;gap:10px;margin:0 0 8px;padding:0;list-style:none}
+.related a{display:block;border-bottom:1px solid var(--line);padding:12px 0;color:var(--head);font-weight:500}
+.related a:hover{color:var(--blue)}
+
+/* подвал */
+footer{background:var(--blue);color:#fff;margin-top:24px}
+.f-top{display:flex;flex-wrap:wrap;gap:16px 48px;padding:56px 0 36px}
+.f-top a{color:#fff;font-weight:700}
+.f-top a:hover{opacity:.8}
+.f-mid{display:flex;flex-wrap:wrap;gap:24px 56px;align-items:center;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.25)}
+.f-mid a{color:#fff}
+.f-mid .big{font-weight:700;font-size:18px}
+.f-bot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding:24px 0 32px;font-size:14px;opacity:.85}
+.f-bot a{color:#fff}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#333;color:#fff;padding:12px 20px;font-size:14px;transition:transform .25s;z-index:20;max-width:90vw}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* адаптив */
+@media (max-width:1180px){
+  .qpage{grid-template-columns:minmax(0,1fr)}
+  aside{position:static}
+  .cards4{grid-template-columns:repeat(2,1fr)}
+  .h-mail{display:none}
+}
+@media (max-width:980px){
+  .layout{grid-template-columns:minmax(0,1fr);gap:32px}
+  .layout aside{order:2}
+  .smenu{display:none}
+  .h-nav{display:none}
+  .h-contacts .h-phone,.h-contacts .btn{display:none}
+  .burger{display:flex}
+  .h-top{height:72px;gap:20px}
+  .blue-panel{grid-template-columns:1fr;padding:40px 28px}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  h1{font-size:30px}
+  h2{font-size:23px}
+  .lead{font-size:16px;line-height:27px}
+  .crumbs{font-size:14px;margin-top:24px}
+  .chips{flex-wrap:nowrap;overflow-x:auto;margin-right:-16px;padding:0 16px 6px 0;scrollbar-width:none}
+  .chip{flex:none}
+  .qcard{padding:22px 20px}
+  .qcard h2{font-size:18px}
+  .cards4{grid-template-columns:1fr}
+  .support-bar{flex-wrap:wrap;padding:24px 20px;gap:16px}
+  .sb-text{flex-basis:calc(100% - 74px);font-size:16px;line-height:26px}
+  .sb-btn{width:100%}
+  .form{grid-template-columns:1fr}
+  .pager{grid-template-columns:1fr}
+  .pg.next{text-align:left;align-items:flex-start}
+  .pg.next .dir{justify-content:flex-start}
+  .pg.ghost{display:none}
+  .short{padding:20px}
+  .short p{font-size:16px;line-height:27px}
+  .blue-panel h2{font-size:26px}
+  .proto .wrap{font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<div class="proto"><div class="wrap">
+  <span>Прототип раздела «Вопрос-ответ». У всех 15 вопросов есть короткий и полный ответ. На странице 5 вопросов, чтобы показать пагинацию; на сайте будет 30.</span>
+  <span>Адрес страницы: <code id="fakeUrl">/support/voprosy-po-rza/</code></span>
+</div></div>
+
+
+<main class="wrap" id="app"></main>
+
+
+
+<script>
+const SITE = 'https://rza-estra.ru';
+const RUBRICS = [
+  {slug:'zashchita-shin', name:'Защита шин: ЛЗШ, УРОВ, дуговая'},
+  {slug:'ozz', name:'ОЗЗ и режим нейтрали'},
+  {slug:'opertok-i-tt', name:'Оперативный ток и ТТ'},
+  {slug:'dvigateli-i-linii', name:'Двигатели и линии'}
+];
+
+const LZSH_FULL = `
+<h2 id="pochemu">Почему предохранитель мешает ЛЗШ</h2>
+<p>ЛЗШ ускоряет отключение КЗ на шинах секции. Защита ввода пускается по току и отключает ввод с короткой выдержкой, если ни одно отходящее присоединение не прислало сигнал пуска своей МТЗ. В МКЗП-МИКРО 2.0 выдержка ЛЗШ задаётся от 0 до 10 с, заводское значение 0,2 с (РЭ МКЗП-МИКРО 2.0, п. 4.1.13).</p>
+<p>У присоединения с предохранителем нет ни пускового органа, ни выходного контакта. При КЗ за предохранителем ввод видит ток, а сигнала блокировки нет. Для ЛЗШ такое КЗ выглядит как КЗ на шинах. Дальше всё решает время: успеет ли вставка перегореть раньше, чем истечёт выдержка ЛЗШ.</p>
+<p>Смена схемы ЛЗШ с последовательной на параллельную задачу не решает. Предохранитель не формирует сигнал ни для одной из них.</p>
+<figure>
+<svg viewBox="0 0 720 330" width="100%" role="img" aria-label="Схема: линии посылают сигнал блокировки ЛЗШ на ввод, ячейка ТСН с предохранителем сигнала не даёт" style="font-family:Montserrat,Arial,sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#00549F"/></marker>
+  </defs>
+  <text x="80" y="140" font-size="13" font-weight="700" fill="#333">Секция шин 6–10 кВ</text>
+  <line x1="80" y1="150" x2="640" y2="150" stroke="#333" stroke-width="4"/>
+  <line x1="360" y1="22" x2="360" y2="150" stroke="#333" stroke-width="2"/>
+  <rect x="348" y="68" width="24" height="24" fill="#fff" stroke="#333" stroke-width="2"/>
+  <text x="346" y="34" font-size="13" font-weight="700" fill="#333" text-anchor="end">Ввод</text>
+  <rect x="400" y="56" width="160" height="48" fill="#E8F0F8" stroke="#00549F" stroke-width="1.5"/>
+  <text x="480" y="77" font-size="12.5" font-weight="700" fill="#00549F" text-anchor="middle">Терминал ввода</text>
+  <text x="480" y="94" font-size="11.5" fill="#494A54" text-anchor="middle">МТЗ + ЛЗШ</text>
+  <line x1="160" y1="150" x2="160" y2="290" stroke="#333" stroke-width="2"/>
+  <rect x="148" y="188" width="24" height="24" fill="#fff" stroke="#333" stroke-width="2"/>
+  <rect x="180" y="200" width="110" height="40" fill="#fff" stroke="#00549F" stroke-width="1.5"/>
+  <text x="235" y="217" font-size="11.5" font-weight="700" fill="#00549F" text-anchor="middle">Терминал</text>
+  <text x="235" y="232" font-size="11" fill="#494A54" text-anchor="middle">пуск МТЗ</text>
+  <text x="160" y="312" font-size="12.5" font-weight="600" fill="#333" text-anchor="middle">Линия 1</text>
+  <line x1="360" y1="150" x2="360" y2="290" stroke="#333" stroke-width="2"/>
+  <rect x="348" y="188" width="24" height="24" fill="#fff" stroke="#333" stroke-width="2"/>
+  <rect x="380" y="200" width="110" height="40" fill="#fff" stroke="#00549F" stroke-width="1.5"/>
+  <text x="435" y="217" font-size="11.5" font-weight="700" fill="#00549F" text-anchor="middle">Терминал</text>
+  <text x="435" y="232" font-size="11" fill="#494A54" text-anchor="middle">пуск МТЗ</text>
+  <text x="360" y="312" font-size="12.5" font-weight="600" fill="#333" text-anchor="middle">Линия 2</text>
+  <line x1="560" y1="150" x2="560" y2="252" stroke="#333" stroke-width="2"/>
+  <rect x="553" y="182" width="14" height="38" fill="#fff" stroke="#333" stroke-width="2"/>
+  <line x1="560" y1="182" x2="560" y2="220" stroke="#333" stroke-width="1.5"/>
+  <circle cx="560" cy="262" r="11" fill="none" stroke="#333" stroke-width="2"/>
+  <circle cx="560" cy="278" r="11" fill="none" stroke="#333" stroke-width="2"/>
+  <text x="575" y="206" font-size="11" fill="#494A54">предохранитель</text>
+  <text x="560" y="312" font-size="12.5" font-weight="600" fill="#333" text-anchor="middle">ТСН</text>
+  <path d="M235 200V122H440V108" fill="none" stroke="#00549F" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#ar)"/>
+  <path d="M470 200V108" fill="none" stroke="#00549F" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#ar)"/>
+  <text x="250" y="116" font-size="11" font-weight="600" fill="#00549F">блокировка ЛЗШ</text>
+  <path d="M610 196V122H530V106" fill="none" stroke="#BBBBBB" stroke-width="1.6" stroke-dasharray="3 4"/>
+  <circle cx="610" cy="172" r="11" fill="#fff" stroke="#D0021B" stroke-width="1.6"/>
+  <path d="M604 166l12 12M616 166l-12 12" stroke="#D0021B" stroke-width="1.8"/>
+  <text x="628" y="176" font-size="11" font-weight="600" fill="#D0021B">нет</text>
+  <text x="628" y="190" font-size="11" font-weight="600" fill="#D0021B">сигнала</text>
+</svg>
+<figcaption>Терминалы линий при КЗ на своём присоединении блокируют ЛЗШ ввода. Ячейка ТСН с предохранителем такого сигнала не даёт, и КЗ за ней ЛЗШ принимает за КЗ на шинах.</figcaption>
+</figure>
+
+<h2 id="gde">Где возникает неселективность</h2>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Место КЗ</th><th>Ток через ввод</th><th>Что происходит</th></tr></thead>
+<tbody>
+<tr><td>На выводах ВН ТСН</td><td>Близок к току КЗ на шинах</td><td>Токоограничивающий предохранитель гасит ток за доли периода, раньше выдержки ЛЗШ. Селективность есть.</td></tr>
+<tr><td>Внутри обмотки ВН трансформатора</td><td>Выше уставки пуска ЛЗШ, но вставка плавится дольше выдержки ЛЗШ</td><td>ЛЗШ отключает ввод, секция теряет питание. Эту зону и проверяют расчётом.</td></tr>
+<tr><td>За трансформатором, на стороне 0,4 кВ</td><td>Часто ниже уставки пуска ЛЗШ: она отстроена от нагрузки всей секции</td><td>ЛЗШ не пускается, предохранитель работает по своей характеристике.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="proverka">Как проверить согласование</h2>
+<ol>
+<li>Переведите уставку пуска ЛЗШ ввода в первичные амперы.</li>
+<li>По времятоковой характеристике предохранителя найдите полное время отключения при этом токе. Характеристику берите для конкретного типа и номинала вставки из документации производителя.</li>
+<li>Если это время меньше выдержки ЛЗШ с запасом на погрешности, селективность обеспечена: при больших токах вставка сработает ещё быстрее.</li>
+<li>Если время больше, при КЗ с таким током ЛЗШ отключит ввод раньше предохранителя. Нужно одно из решений ниже.</li>
+</ol>
+
+<h2 id="resheniya">Что делать, если не согласуется</h2>
+<ul>
+<li><b>Увеличить выдержку ЛЗШ</b> до согласования с предохранителем. Самый простой вариант, но часть выигрыша по времени теряется.</li>
+<li><b>Поставить в ячейку ТСН трансформаторы тока и токовую защиту,</b> которая заводит сигнал пуска в цепь блокировки ЛЗШ. Отключать КЗ по-прежнему будет предохранитель, защита нужна только для блокировки.</li>
+<li><b>Подключить ТСН до вводного выключателя,</b> на кабельный ввод секции. КЗ в ТСН уходит из зоны ЛЗШ, но ТСН перестаёт получать резерв через секционный выключатель.</li>
+</ul>
+
+<div class="box-estra">
+<h3>Как это сделано в устройствах ЭСТРА</h3>
+<p>В МКЗП-МИКРО 2.0 ЛЗШ работает по параллельной или последовательной схеме и пускается от ступеней МТЗ-2, МТЗ-3 и МТЗ-4. Выдержка задаётся с шагом 0,01 с, поэтому её удобно точно согласовать с предохранителем.</p>
+<p>Для блокировки от ячейки ТСН подойдёт ЭСТРА-РЕЛЕ. Он ставится в релейный отсек КСО или КРУ и может питаться от токовых цепей. Его выходное реле пуска МТЗ заводится на вход блокировки ЛЗШ терминала ввода.</p>
+<div class="prods">
+<a class="btn" href="${SITE}/product/seriya-mkzp-mikro-2-0/" target="_blank" rel="noopener">МКЗП-МИКРО 2.0</a>
+<a class="btn btn--ghost" href="${SITE}/product/byudzhetnoe-mikroprotsessornoe-ustroystvo-releynoy-zashchity-i-avtomatiki-estra-rele/estra-rele/" target="_blank" rel="noopener">ЭСТРА-РЕЛЕ</a>
+</div>
+</div>
+
+<p><b>Подробнее в статье:</b> <a href="${SITE}/articles/proektirovanie-releynoy-zashchity-6-35-kv-sostav-proekta-etapy-i-normy/" target="_blank" rel="noopener">Проектирование релейной защиты 6–35 кВ</a>, раздел «Защита шин, ЛЗШ и УРОВ».</p>
+
+<div class="src">Источники
+<ul>
+<li>Руководство по эксплуатации МКЗП-МИКРО 2.0, версия 1.18, п. 4.1.13 «Логическая защита шин».</li>
+<li>ПУЭ, 7-е изд., п. 3.2.126: защита шин 6–10 кВ понижающих подстанций.</li>
+</ul></div>
+`;
+
+const FULL = {
+  'vyderzhka-vremeni-lzsh': `
+<h2 id="ot-chego">От чего зависит выдержка ЛЗШ</h2>
+
+<p>Выдержка ЛЗШ — время, которое защита ввода ждёт сигнала блокировки от отходящих присоединений. Пока ввод видит ток, а блокировки нет, защита считает, что КЗ на шинах секции, и по истечении выдержки отключает ввод.</p>
+
+<p>Единого нормативного значения нет: ПУЭ выдержку ЛЗШ не нормируют, а руководства по эксплуатации задают только диапазон и заводскую уставку.</p>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Устройство</th><th>Диапазон</th><th>Шаг</th><th>Заводское значение</th></tr></thead>
+<tbody>
+<tr><td>МКЗП-МИКРО 2.0</td><td>0–10 с</td><td>0,01 с</td><td>0,2 с</td></tr>
+<tr><td>ЭСТРА-ДЗТ</td><td>0–10 с</td><td>0,01 с</td><td>0,2 с</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="perekryvat">Что должна перекрывать выдержка</h2>
+
+<p>Выдержка должна быть больше времени, за которое сигнал блокировки доходит до ввода от самого медленного отходящего присоединения. В это время входят:</p>
+
+<ul>
+<li>пуск токового органа МТЗ отходящей линии;</li>
+<li>срабатывание выходного реле терминала линии;</li>
+<li>прохождение сигнала по цепи блокировки;</li>
+<li>срабатывание дискретного входа терминала ввода.</li>
+</ul>
+
+<p>Время отключения выключателя линии в выдержку не входит. Пока КЗ на линии не отключено, её пусковой орган продолжает выдавать сигнал, и ввод остаётся заблокированным.</p>
+
+<h2 id="znachenie">Какое значение выбирать</h2>
+
+<p>На практике чаще всего ставят 0,1–0,3 с, заводское 0,2 с находится в этом диапазоне. Это опыт эксплуатации, а не норма. Конкретное значение зависит от схемы:</p>
+
+<ul>
+<li><b>Все присоединения на терминалах, цепи блокировки короткие.</b> Подходит заводское или близкое к нему значение. Окончательно его проверяют испытаниями.</li>
+<li><b>В цепи блокировки есть промежуточные реле или другие устройства.</b> К выдержке добавляют время их срабатывания.</li>
+<li><b>На секции есть присоединения без сигнала блокировки,</b> например ячейка ТСН с предохранителями. Выдержку согласуют с характеристикой предохранителя: <a href="#/q/lzsh-pri-tsn-na-predokhranitelyakh">Можно ли сделать ЛЗШ, если ТСН подключён к шинам через предохранители?</a></li>
+</ul>
+
+<h2 id="proverka">Как проверить</h2>
+
+<ol>
+<li>Определите для самого медленного отходящего присоединения время от пуска МТЗ до появления сигнала на входе блокировки ввода. Его снимают при испытаниях по журналу событий и осциллограммам терминалов.</li>
+<li>Выберите выдержку больше этого времени с запасом на погрешности.</li>
+<li>Убедитесь, что выдержка заметно меньше выдержки МТЗ ввода. Выдержку МТЗ ввода выбирают по селективности с защитами отходящих линий, поэтому ЛЗШ ускоряет отключение КЗ на шинах только пока её выдержка существенно меньше.</li>
+</ol>
+
+<p>Если выдержка мала, сигнал блокировки при КЗ на линии может прийти позже, чем она истечёт, и ввод отключится неселективно. Если велика, выигрыш во времени пропадает.</p>
+
+<p>Отдельно проверьте цепь блокировки. Обрыв в параллельной схеме в нормальном режиме не виден, а при КЗ на линии приводит к отключению ввода. При параллельной схеме длительное наличие сигнала на входе блокировки терминал распознаёт как неисправность «Неиспр ЛЗШ».</p>
+
+<div class="box-estra">
+<h3>Как это сделано в устройствах ЭСТРА</h3>
+<p>В МКЗП-МИКРО 2.0 и ЭСТРА-ДЗТ ЛЗШ работает по параллельной или последовательной схеме, выдержка задаётся с шагом 0,01 с. Сигналы пуска МТЗ нижестоящих присоединений заводятся на дискретные входы защиты ввода.</p>
+<div class="prods">
+<a class="btn" href="${SITE}/product/seriya-mkzp-mikro-2-0/" target="_blank" rel="noopener">МКЗП-МИКРО 2.0</a>
+<a class="btn btn--ghost" href="${SITE}/product/differentsialnaya-zashchita-prisoedineniy-6-220-kv/estra-dzt/" target="_blank" rel="noopener">ЭСТРА-ДЗТ</a>
+</div>
+</div>
+
+<p><b>Подробнее в статье:</b> <a href="${SITE}/articles/proektirovanie-releynoy-zashchity-6-35-kv-sostav-proekta-etapy-i-normy/" target="_blank" rel="noopener">Проектирование релейной защиты 6–35 кВ</a>, раздел «Защита шин, ЛЗШ и УРОВ».</p>
+
+<div class="src">Источники
+<ul>
+<li>Руководство по эксплуатации МКЗП-МИКРО 2.0, версия 1.18, п. 4.1.13, табл. 4.1.41.</li>
+<li>Руководство по эксплуатации ЭСТРА-ДЗТ, версия 1.09, п. 4.1.8, табл. 4.1.26.</li>
+<li>ПУЭ, 7-е изд., п. 3.2.126: защита шин 6–10 кВ понижающих подстанций.</li>
+</ul></div>
+`,
+  'blokirovka-avr-pri-lzsh': `
+<h2 id="pochemu">Почему АВР не должен включать секционный выключатель после ЛЗШ</h2>
+
+<p>ЛЗШ срабатывает, когда повреждение находится на шинах секции: ток есть, а блокировки от отходящих присоединений нет. После отключения ввода повреждение остаётся на секции. Если АВР включит секционный выключатель, напряжение от соседней секции будет подано на неустранённое КЗ.</p>
+
+<p>Результат — повторное КЗ, нагрузка на оборудование второй секции и риск потерять питание сразу обеих секций. Поэтому отключение ввода защитами шин должно запрещать АВР.</p>
+
+<p>ПУЭ в п. 3.3.40 требуют ускорять защиту при включении от АВР на КЗ. Это страховка на случай, если блокировки не было, а не замена блокировки.</p>
+
+<h2 id="puski">Какие пуски АВР есть в МКЗП-МИКРО 2.0</h2>
+
+<p>В руководстве по эксплуатации нет отдельного пункта «запрет АВР от ЛЗШ». Что произойдёт после отключения ввода, зависит от того, какие пуски АВР введены.</p>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Пуск АВР</th><th>Когда работает</th><th>Заводское значение</th></tr></thead>
+<tbody>
+<tr><td>«Пуск АВР» (по напряжению)</td><td>Снижение напряжения ниже уставки. Блокируется при неисправности цепей напряжения, пуске МТЗ и отсутствии напряжения на соседней секции</td><td>—</td></tr>
+<tr><td>«МТЗ-3», «МТЗ-4»</td><td>Отключение ввода ступенями МТЗ, АВР без выдержки</td><td>Выведены</td></tr>
+<tr><td>«СП ОТКЛ»</td><td>Самопроизвольное отключение ввода</td><td>Введён</td></tr>
+<tr><td>«РО»</td><td>Ручное отключение ввода</td><td>Введён</td></tr>
+<tr><td>«ВО-1»</td><td>Отключение ввода внешней защитой, например дифференциальной защитой трансформатора</td><td>—</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="kak">Как выполнить блокировку</h2>
+
+<ol>
+<li>Выделите сигналы отключения ввода от защит, которые действуют при КЗ на шинах: ЛЗШ, дуговая защита, дифференциальная защита шин, если она есть.</li>
+<li>Проверьте по схеме и логике терминала, какой из пусков АВР может сработать после такого отключения («СП ОТКЛ», «ВО-1», «МТЗ-3», «МТЗ-4»).</li>
+<li>Выведите такие пуски или заведите сигнал отключения от защит шин на запрет АВР, например снятием разрешающего сигнала на входе «Разр АВР».</li>
+<li>Проверьте на испытаниях: имитируйте срабатывание ЛЗШ и убедитесь, что секционный выключатель не включился.</li>
+</ol>
+
+<p>Отключение ввода из-за потери питания или ручное отключение запрещать не нужно: именно для них АВР и предназначен.</p>
+
+<div class="box-estra">
+<h3>Как это сделано в устройствах ЭСТРА</h3>
+<p>АВР, возврат нормального режима, ЛЗШ и дуговая защита реализованы в МКЗП-МИКРО 2.0, пуски АВР вводятся конфигурационными ключами. Для секционного выключателя предназначено исполнение МКЗП-МИКРО 2.0-4.</p>
+<div class="prods">
+<a class="btn" href="${SITE}/product/seriya-mkzp-mikro-2-0/" target="_blank" rel="noopener">МКЗП-МИКРО 2.0</a>
+<a class="btn btn--ghost" href="${SITE}/product/seriya-mkzp-mikro-2-0/mkzp-mikro-2-0-4/" target="_blank" rel="noopener">МКЗП-МИКРО 2.0-4</a>
+</div>
+</div>
+
+<p><b>Подробнее в статье:</b> <a href="${SITE}/articles/avtomaticheskiy-vvod-rezerva-avr-printsip-raboty-ustavki-i-primenenie-v-setyakh-6-35-kv/" target="_blank" rel="noopener">Автоматический ввод резерва в сетях 6–35 кВ</a>.</p>
+
+<div class="src">Источники
+<ul>
+<li>Руководство по эксплуатации МКЗП-МИКРО 2.0, версия 1.18, п. 4.2.1 «АВР и ВНР», табл. 4.2.1.</li>
+<li>ПУЭ, 7-е изд., п. 3.3.40: ускорение защиты при включении от АВР на КЗ.</li>
+<li>ПУЭ, 7-е изд., п. 3.2.126: защита шин 6–10 кВ.</li>
+</ul></div>
+`,
+  'dugovaya-zashchita-ne-otklyuchila-vvod': `
+<h2 id="prinzip">Почему одного света недостаточно</h2>
+
+<p>Датчик реагирует на свет, но засветка бывает и без дуги: вспышка фотоаппарата, переносной светильник, соседняя камера. Поэтому дуговая защита отключает только при двух признаках: свет на датчике и пуск по току или по напряжению. Дополнительный контроль по току предусмотрен и для внешних устройств дуговой защиты, чтобы ложная засветка не отключала присоединение.</p>
+
+<p>Если дуга есть, а второй признак не появился, ввод не отключится. Вот частые причины.</p>
+
+<h2 id="prichiny">Частые причины</h2>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Причина</th><th>Что происходит</th><th>Что проверить</th></tr></thead>
+<tbody>
+<tr><td>Дуговое замыкание на землю</td><td>При ОЗЗ междуфазные напряжения не меняются, поэтому пуск по напряжению не срабатывает. Ток замыкания определяется режимом нейтрали и часто ниже уставки пуска по току. При низкоомном заземлении (около 100 Ом в сети 6 кВ и 150 Ом в сети 10 кВ) он около 40 А</td><td>Режим нейтрали, ток ОЗЗ и уставку пуска по току. Дуга отключится после перехода в междуфазное КЗ</td></tr>
+<tr><td>Дуга вне зоны трансформаторов тока ввода</td><td>Ток ввода дугу в кабельном отсеке ввода до своих ТТ не видит</td><td>Нужна команда на отключение питающей стороны («ОТКЛ Т от ЗДЗ»)</td></tr>
+<tr><td>Уставка пускового органа по току выше тока КЗ</td><td>Пуск по току не срабатывает, хотя датчик видит дугу</td><td>Уставку пуска: её принимают равной уставке пуска МТЗ соответствующей ячейки</td></tr>
+<tr><td>Заблокирован пуск по напряжению</td><td>При неисправности цепей напряжения («Неиспр ЦН») пуск по напряжению блокируется</td><td>Цепи напряжения и сигнал неисправности</td></tr>
+<tr><td>Канал дуговой защиты заблокирован или выведен</td><td>Длительная засветка датчика или неисправность канала даёт сигнал «Неиспр ДЗ», он блокирует срабатывание. Защиту могли вывести ключом на время работ</td><td>Журнал событий и положение ключа ввода ЗДЗ</td></tr>
+<tr><td>Датчик не видит дугу</td><td>Дуга возникла в отсеке, где нет датчика, или головка направлена не на вероятное место дуги</td><td>Установку датчиков: каждый оптически изолированный отсек (шин, выключателя, кабельный) должен иметь свой</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="razbor">Как разобрать случай</h2>
+
+<ol>
+<li>Откройте журнал событий и осциллограмму терминала. Определите, был ли сигнал датчика и был ли пуск по току или напряжению.</li>
+<li>Если датчик сработал, а пуска не было, пересмотрите источник подтверждения: ток другого присоединения, напряжение или ток нулевой последовательности, ток заземляющего резистора. Выбор зависит от режима нейтрали и требует проектной проработки.</li>
+<li>Если сигнала датчика не было, проверьте сам датчик и канал. Фотодиодные датчики ДДЗ-01 проверяют лампой накаливания 60–100 Вт или ксеноновой лампой не менее 35 Вт, фотовспышка должна давать импульс не менее 10 мс. Светодиодный фонарь датчик не воспринимает.</li>
+</ol>
+
+<div class="box-estra">
+<h3>Как это сделано в устройствах ЭСТРА</h3>
+<p>У МКЗП-МИКРО 2.0 с индексом -ДЗ три входа дуговой защиты (фотодиодные датчики ДДЗ-01 или оптоволоконные ДДЗ-02 по заказу), пуск по току или напряжению и контроль целостности линий датчиков. В исполнениях без встроенной дуговой защиты на входы «Внеш ДЗ1» и «Внеш ДЗ2» заводят выходы внешнего устройства, например МИКО-ДЗ, с дополнительным контролем по току.</p>
+<div class="prods">
+<a class="btn" href="${SITE}/product/seriya-mkzp-mikro-2-0/" target="_blank" rel="noopener">МКЗП-МИКРО 2.0</a>
+<a class="btn btn--ghost" href="${SITE}/product/dugovaya-zashchita/miko-dz/" target="_blank" rel="noopener">МИКО-ДЗ</a>
+</div>
+</div>
+
+<div class="src">Источники
+<ul>
+<li>Руководство по эксплуатации МКЗП-МИКРО 2.0, версия 1.18, пп. 2.6, 4.1.14.</li>
+<li>Руководство по эксплуатации ЭСТРА-ДЗТ, версия 1.09, п. 4.1.10.</li>
+<li>Руководство по эксплуатации МИКО-ДЗ, версия 1.11, разд. 3.1 и п. 5.2.2.</li>
+<li>Методические указания по расчёту уставок защит распределительных сетей 6–35 кВ (НГТУ–ЭСТРА, 2026), ч. 1, п. 1.2.1, п. 3.4.15.</li>
+<li>Вайнштейн Р.А. и др. Защита от ОЗЗ в сети собственных нужд блока при разных режимах заземления нейтрали // Релейная защита и автоматизация. 2020. № 1.</li>
+</ul></div>
+`,
+  'pusk-dugovoy-zashchity-ot-ozz': `
+<h2 id="zachem">Зачем нужен такой пуск</h2>
+
+<p>При дуговом ОЗЗ междуфазные напряжения не меняются, а ток замыкания определяется режимом нейтрали и может быть ниже уставки МТЗ ввода. Пуск по току или по снижению линейного напряжения такую дугу не подтверждает, и дуговая защита отключит повреждение только после перехода в междуфазное КЗ.</p>
+
+<p>Чтобы защита работала и на ранней стадии, вторым признаком берут сигнал от защиты от ОЗЗ. Тогда отключение происходит при совпадении засветки датчика и замыкания на землю.</p>
+
+<h2 id="priznaki">Что можно взять вторым признаком</h2>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Признак</th><th>Где подходит</th><th>Ограничение</th></tr></thead>
+<tbody>
+<tr><td>Напряжение нулевой последовательности 3U0 (разомкнутый треугольник ТН)</td><td>Сети с изолированной, компенсированной и резистивно заземлённой нейтралью</td><td>Фиксирует ОЗЗ на всей секции и не указывает отсек с дугой</td></tr>
+<tr><td>Ток нулевой последовательности 3I0 защиты от ОЗЗ присоединения</td><td>Сети, где ток ОЗЗ достаточен для чувствительной защиты</td><td>Указывает присоединение, а не отсек</td></tr>
+<tr><td>Ток в цепи заземляющего резистора</td><td>Резистивное заземление нейтрали</td><td>Фиксирует замыкание на землю в любой точке сети</td></tr>
+</tbody>
+</table></div>
+
+<p>Это общие технические варианты, а не готовое решение: набор сигналов и логику определяет проект конкретного объекта.</p>
+
+<h2 id="uchest">Что учесть при решении</h2>
+
+<ul>
+<li><b>Допустимо ли по проекту ОЗЗ без отключения.</b> ПУЭ для сетей 3–10 кВ допускают защиту от ОЗЗ на сигнал или на отключение по требованиям безопасности (п. 3.2.96), в сетях 20 и 35 кВ — как правило на сигнал (п. 3.2.99). Пуск ЗДЗ от защиты от ОЗЗ не отменяет этот режим: отключение секции происходит только при совпадении двух признаков.</li>
+<li><b>Ложная засветка при существующем ОЗЗ.</b> Пока в сети есть замыкание на землю, любая засветка датчика отключит секцию. Это нужно учесть в регламенте работ в РУ.</li>
+<li><b>Зона действия.</b> Определите, что отключать при таком пуске: секцию, ввод или питающую сторону. Дуга в кабельном отсеке ввода требует отключения со стороны питания.</li>
+<li><b>Режим нейтрали.</b> От него зависят ток ОЗЗ, напряжение 3U0 и выбор признака. При низкоомном резистивном заземлении ток около 40 А, при изолированной нейтрали — ёмкостный ток сети.</li>
+</ul>
+
+<h2 id="reshenie">Как принять решение</h2>
+
+<ol>
+<li>Определите режим нейтрали и расчётные токи ОЗЗ.</li>
+<li>Проверьте, подтвердит ли дугу пуск по току МТЗ или по напряжению при ОЗЗ. Если нет, нужен другой признак.</li>
+<li>Выберите признак и зону действия, согласуйте их с эксплуатацией и сетевой организацией.</li>
+<li>Проверьте на испытаниях два случая: засветка при ОЗЗ и засветка без ОЗЗ.</li>
+</ol>
+
+<div class="src">Источники
+<ul>
+<li>ПУЭ, 7-е изд., пп. 3.2.96, 3.2.99.</li>
+<li>Руководство по эксплуатации МКЗП-МИКРО 2.0, версия 1.18, п. 4.1.14: пуск ЗДЗ по току и по линейному напряжению.</li>
+<li>Методические указания по расчёту уставок защит распределительных сетей 6–35 кВ (НГТУ–ЭСТРА, 2026), ч. 1, п. 1.2.1.</li>
+<li>Вайнштейн Р.А. и др. // Релейная защита и автоматизация. 2020. № 1: токи при резистивном заземлении нейтрали.</li>
+</ul></div>
+`,
+  'nuzhen-li-urov-na-6-10-kv': `
+<h2 id="normy">Что говорят нормы</h2>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Документ</th><th>Что требует</th><th>Где действует</th></tr></thead>
+<tbody>
+<tr><td>ПУЭ, п. 3.2.18</td><td>УРОВ в электроустановках 110–500 кВ</td><td>Для 6–10 кВ УРОВ не требуется</td></tr>
+<tr><td>Приказ Минэнерго № 6, п. 189</td><td>УРОВ с пуском от защит на выключателях 6–35 кВ тех присоединений, отказ которых не резервируется защитами других присоединений</td><td>Подстанции 35 кВ и выше</td></tr>
+<tr><td>СТО 56947007-33.040.20.297-2019</td><td>УРОВ входит в типовой состав релейных отсеков ввода, секционного выключателя и отходящей линии</td><td>Типовые шкафы 6–35 кВ</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="rp">Что делать для отдельного РП 6–10 кВ</h2>
+
+<p>Для распределительного пункта вне подстанции 35 кВ и выше норма не обязывает, решает проект. УРОВ нужен там, где отказ выключателя нечем резервировать. Для этого проверьте:</p>
+
+<ul>
+<li>отключит ли отказавший выключатель вышестоящая защита (на питающей подстанции);</li>
+<li>с какой выдержкой она это сделает и допустима ли такая выдержка для оборудования и потребителей;</li>
+<li>хватает ли ей чувствительности при КЗ на РП: дальнее резервирование в протяжённых сетях бывает нечувствительным.</li>
+</ul>
+
+<p>Если вышестоящая защита отключает слишком поздно или не чувствует КЗ, УРОВ на вводе РП оправдан. В противном случае достаточно дальнего резервирования.</p>
+
+<h2 id="kak">Как работает УРОВ в терминале 6–10 кВ</h2>
+
+<ul>
+<li>Отказ выключателя фиксируется по наличию тока через заданное время после команды на отключение или по положению выключателя (сигнал «РПО»).</li>
+<li>При отказе формируется сигнал на отключение выключателей основного и резервного питания.</li>
+<li>Выдержка УРОВ должна быть больше времени отключения выключателя, времени возврата пускающей защиты и запаса. Она увеличивает выдержки резервных защит смежных участков.</li>
+<li>При ОЗЗ в сети с изолированной или компенсированной нейтралью ток мал, и контроль по току не работает. В таком случае пуск по положению выключателя.</li>
+</ul>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Параметр в МКЗП-МИКРО 2.0</th><th>Диапазон</th><th>Заводское значение</th></tr></thead>
+<tbody>
+<tr><td>Ток срабатывания (вторичные величины)</td><td>0,1–200 А</td><td>0,5 А</td></tr>
+<tr><td>Выдержка времени</td><td>0–300 с</td><td>1 с</td></tr>
+<tr><td>Способ пуска</td><td>по току / по РПО</td><td>по току</td></tr>
+</tbody>
+</table></div>
+
+<div class="box-estra">
+<h3>Как это сделано в устройствах ЭСТРА</h3>
+<p>В МКЗП-МИКРО 2.0 УРОВ реализован в каждом исполнении. Триггер УРОВ сбрасывается только при успешном отключении выключателя. Часть защит закреплена за УРОВ жёстко, остальные вводятся конфигурационными ключами.</p>
+<div class="prods">
+<a class="btn" href="${SITE}/product/seriya-mkzp-mikro-2-0/" target="_blank" rel="noopener">МКЗП-МИКРО 2.0</a>
+</div>
+</div>
+
+<p><b>Подробнее в статье:</b> <a href="${SITE}/articles/proektirovanie-releynoy-zashchity-6-35-kv-sostav-proekta-etapy-i-normy/" target="_blank" rel="noopener">Проектирование релейной защиты 6–35 кВ</a>, раздел «Защита шин, ЛЗШ и УРОВ».</p>
+
+<div class="src">Источники
+<ul>
+<li>ПУЭ, 7-е изд., п. 3.2.18.</li>
+<li>Приказ Минэнерго России № 6 (2024), п. 189.</li>
+<li>СТО 56947007-33.040.20.297-2019: типовые шкафы ШЭТ и ОЭТ 6–35 кВ.</li>
+<li>Руководство по эксплуатации МКЗП-МИКРО 2.0, версия 1.18, п. 4.2.4, табл. 4.2.12–4.2.13.</li>
+<li>Чернобровов Н.В., Семёнов В.А. Релейная защита энергетических систем, гл. 20.</li>
+<li>Шнеерсон Э.М. Цифровая релейная защита, § 8.5.</li>
+</ul></div>
+`,
+  'tt-ne-prokhodit-po-nasyshcheniyu': `
+<h2 id="chto">Что значит «не проходит по насыщению»</h2>
+
+<p>Для защит от КЗ полная погрешность трансформатора тока при расчётном токе, как правило, не должна превышать 10 % (ПУЭ, п. 3.2.29). Если сердечник насыщается раньше, вторичный ток искажается, и защита может не сработать или сработать с ошибкой.</p>
+
+<p>Проверку делают по заводской кривой предельной кратности K10 = f(zн), где zн — сопротивление вторичной нагрузки. По расчётной кратности находят допустимое сопротивление zн.доп. Действительная нагрузка должна быть не больше допустимой: zн ≤ zн.доп.</p>
+
+<p>В расчётную кратность закладывают поправки. Коэффициент kа учитывает апериодическую составляющую тока КЗ и принимается 1,2–2, а для защит с выдержкой времени 1. Коэффициент α учитывает отличие характеристики конкретного ТТ от типовой и принимается 0,8–0,9.</p>
+
+<h2 id="chto-delat">Что делать, если zн больше zн.доп</h2>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Мера</th><th>Как работает</th><th>Ограничение</th></tr></thead>
+<tbody>
+<tr><td>Уменьшить сопротивление проводов</td><td>Нагрузка складывается из проводов, входных цепей терминала и контактных соединений. Увеличивают сечение жил, сокращают длину кабеля</td><td>Сечение ограничено зажимами. По ПУЭ минимум для токовых цепей 2,5 мм² Cu или 4 мм² Al (п. 3.4.4)</td></tr>
+<tr><td>Перейти на вторичный ток 1 А</td><td>Мощность нагрузки равна I²·z, поэтому ТТ на 1 А при тех же конструктивных параметрах допускает сопротивление в 25 раз больше</td><td>Нужен терминал с токовым входом на 1 А. Входы фазных токов МКЗП-МИКРО 2.0 по методическим указаниям рассчитаны на 5 А</td></tr>
+<tr><td>Выбрать ТТ с большим коэффициентом трансформации</td><td>Кратность первичного тока к номинальному снижается</td><td>Уменьшается вторичный ток при минимальном КЗ. Проверьте коэффициент чувствительности</td></tr>
+<tr><td>Выбрать ТТ с большей предельной кратностью или мощностью</td><td>Допустимая нагрузка при той же кратности выше</td><td>Габариты и стоимость, место в ячейке</td></tr>
+<tr><td>Развести измерения и защиты по разным обмоткам</td><td>Приборы учёта не добавляют нагрузку защитной обмотке</td><td>Нужна свободная обмотка. ПУЭ рекомендует разные обмотки для измерений и РЗ (п. 3.2.30)</td></tr>
+</tbody>
+</table></div>
+
+<p>Учтите и переходный режим. Пока апериодическая составляющая не затухла, насыщение наступает раньше, чем при синусоидальном токе. Для токовых отсечек без выдержки закладывайте kа = 1,2–2.</p>
+
+<h2 id="poryadok">Порядок проверки</h2>
+
+<ol>
+<li>Определите максимальный ток, при котором защита должна работать точно.</li>
+<li>Рассчитайте расчётную кратность с коэффициентами kа и α.</li>
+<li>По заводской кривой K10 = f(zн) найдите zн.доп.</li>
+<li>Рассчитайте действительную нагрузку: провода, вход терминала, переходные сопротивления.</li>
+<li>Если zн &gt; zн.доп, примените меры из таблицы и повторите расчёт.</li>
+</ol>
+
+<p><b>Подробнее в статье:</b> <a href="${SITE}/articles/kak-vybrat-transformator-toka-dlya-ustroystv-rza/" target="_blank" rel="noopener">Как выбрать трансформатор тока для устройств РЗА</a>.</p>
+
+<div class="src">Источники
+<ul>
+<li>ПУЭ, 7-е изд., пп. 3.2.29, 3.2.30, 3.4.4.</li>
+<li>Чернобровов Н.В., Семёнов В.А. Релейная защита энергетических систем, § 3-4.</li>
+<li>Шнеерсон Э.М. Цифровая релейная защита, § 4.1.</li>
+<li>Методические указания по расчёту уставок защит распределительных сетей 6–35 кВ (НГТУ–ЭСТРА, 2026), ч. 1, п. 2.2.</li>
+</ul></div>
+`,
+  'rezistivnoe-zazemlenie-i-zashchity': `
+<h2 id="tok">Что меняется в токе замыкания</h2>
+
+<p>В сети с изолированной нейтралью ток ОЗЗ задаёт ёмкость сети. Резистор в нейтрали добавляет активную составляющую, и режим меняется.</p>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Режим</th><th>Чем определяется ток ОЗЗ</th></tr></thead>
+<tbody>
+<tr><td>Изолированная нейтраль</td><td>Ёмкостью сети</td></tr>
+<tr><td>Высокоомное резистивное заземление</td><td>Активный ток резистора близок к ёмкостному току сети</td></tr>
+<tr><td>Низкоомное резистивное заземление</td><td>Током резистора, ёмкостная составляющая практически не влияет. Около 40 А при 100 Ом в сети 6 кВ и 150 Ом в сети 10 кВ</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="zashchity">Что меняется в защитах</h2>
+
+<ul>
+<li><b>Принцип.</b> В изолированной сети защита отстраивается от собственного ёмкостного тока линии и срабатывает от ёмкостного тока остальной сети. При низкоомном заземлении по повреждённому присоединению течёт ток резистора, он намного больше ёмкостного, и различить повреждённое присоединение проще. Как правило, применяют токовую защиту на ТТНП.</li>
+<li><b>Действие.</b> В изолированной сети защита от ОЗЗ может действовать на сигнал (ПУЭ, пп. 3.2.96, 3.2.99). В сети с резистивным заземлением длительное протекание тока в десятки ампер недопустимо, поэтому защита, как правило, действует на отключение.</li>
+<li><b>Уставки.</b> Ток срабатывания выбирают от тока резистора и тока небаланса, а не от ёмкостного тока сети. Чувствительность проверяют по минимальному току через резистор, в том числе при замыкании через переходное сопротивление.</li>
+<li><b>Другие защиты.</b> Дуговая защита на дугу при ОЗЗ не получит пуск по току МТЗ ввода: <a href="#/q/dugovaya-zashchita-ne-otklyuchila-vvod">Почему дуговая защита не отключила ввод при дуге на шинах?</a></li>
+</ul>
+
+<h2 id="proverit">Что проверить до перехода на резистивное заземление</h2>
+
+<ol>
+<li>Режим работы резистора. Он может быть рассчитан на длительное протекание тока или на кратковременное, с автоматическим отключением при отказе защиты. Во втором случае сеть переходит в режим изолированной нейтрали с замыканием на землю, что опасно перенапряжениями.</li>
+<li>Расчёт токов ОЗЗ при всех схемах сети и положениях секционных выключателей.</li>
+<li>Чувствительность и селективность защит от ОЗЗ на всех присоединениях, выдержки времени и действие на отключение.</li>
+<li>Ток небаланса ТТНП и вход терминала: чувствительность по первичному току должна быть ниже минимального тока резистора с запасом.</li>
+</ol>
+
+<p><b>Подробнее в статье:</b> <a href="${SITE}/articles/zashchita-ot-odnofaznykh-zamykaniy-na-zemlyu-v-setyakh-6-35-kv/" target="_blank" rel="noopener">Защита от ОЗЗ в сетях 6–35 кВ</a>.</p>
+
+<div class="src">Источники
+<ul>
+<li>Вайнштейн Р.А., Доронин А.В., Пашковский С.Н. и др. Защита от ОЗЗ в сети собственных нужд блока при разных режимах заземления нейтрали // Релейная защита и автоматизация. 2020. № 1. С. 18–24.</li>
+<li>ПУЭ, 7-е изд., пп. 3.2.96, 3.2.97, 3.2.99.</li>
+<li>Методические указания по расчёту уставок защит распределительных сетей 6–35 кВ (НГТУ–ЭСТРА, 2026), ч. 1, гл. 2: режимы нейтрали.</li>
+</ul></div>
+`,
+  'rp-na-peremennom-operativnom-toke': `
+<h2 id="normy">Что допускают нормы</h2>
+
+<p>ПУЭ рекомендуют защиты на переменном оперативном токе, если это упрощает и удешевляет установку (п. 3.2.31). Источником переменного оперативного тока для защит от КЗ служат, как правило, трансформаторы тока защищаемого элемента, допускаются трансформаторы напряжения и собственных нужд (п. 3.2.32).</p>
+
+<p>Для подстанций 35 кВ и выше Приказ Минэнерго № 6 добавляет требования к системе оперативного переменного тока: два источника, шины обеспеченного питания с АВР, разделительные трансформаторы с контролем изоляции (п. 145). Для отдельного РП 6–10 кВ эти пункты не обязательны.</p>
+
+<h2 id="sposoby">Три способа без аккумуляторной батареи</h2>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Способ</th><th>Как работает</th><th>Устройства ЭСТРА</th></tr></thead>
+<tbody>
+<tr><td>Дешунтирование электромагнитов отключения</td><td>Токовые электромагниты включены во вторичные цепи ТТ и зашунтированы ключами защиты. При срабатывании ключи размыкаются, и ток ТТ идёт через электромагнит</td><td>МКЗП-МИКРО 2.0 с индексом -ДШ, ЭСТРА-РЕЛЕ.Д</td></tr>
+<tr><td>Блок питания от ТТ и ТН</td><td>Блок питает терминал и цепи отключения от трансформаторов тока, а при наличии напряжения — от цепей напряжения или оперативного напряжения</td><td>БПТ-01, БПТ-ДШ</td></tr>
+<tr><td>Конденсаторный накопитель</td><td>Заряженная батарея конденсаторов отдаёт энергию на отключение и питает шинки ЛЗШ, УРОВ и дуговой защиты</td><td>ЭСТРА-БК</td></tr>
+</tbody>
+</table></div>
+
+<p>Терминалы с питанием от токовых цепей (МКЗП-МИКРО 2.0 с индексом -Т, ЭСТРА-РЕЛЕ) выполняют питание самого терминала. Для цепей отключения нужен один из способов в таблице.</p>
+
+<h2 id="ogranicheniya">Ограничения, которые нужно проверить</h2>
+
+<ul>
+<li><b>Достаточность тока КЗ для дешунтирования.</b> Чувствительность электромагнита отключения проверяют с учётом погрешности ТТ после дешунтирования, и она должна быть примерно на 20 % больше, чем у защиты (ПУЭ, п. 3.2.24). При малых кратностях тока, например в конце длинной линии, условие может не выполниться. Тогда питание берут от блока с накопителем.</li>
+<li><b>Электромагниты на 5 А.</b> Электромагниты, которыми управляет МКЗП, должны иметь номинальный ток срабатывания 5 А. При 3 А возможно самопроизвольное отключение выключателя из-за остаточного напряжения 1–1,2 В на ключе. Работа цепей дешунтирования не гарантируется при уставках тока ниже 5 А.</li>
+<li><b>Какие защиты действуют через дешунтирование.</b> В МКЗП это МТЗ, защита от несимметрии фазных токов, дуговая защита и ЛЗШ.</li>
+<li><b>Команды без тока КЗ.</b> АВР, ручное отключение и телеуправление не связаны с током КЗ, и от ТТ их не выполнить. Для таких команд нужен источник питания от ТН, ТСН или накопитель.</li>
+<li><b>Запуск терминала.</b> При питании от токовых цепей терминал готов к действию не позже чем через 150 мс при токе не менее 5 А, минимальный ток запуска — 2,5 А в одной фазе.</li>
+</ul>
+
+<h2 id="vybor">Как выбрать вариант</h2>
+
+<ol>
+<li>Выясните тип приводов и токовых электромагнитов выключателей: номинальный ток 5 А или 3 А.</li>
+<li>Рассчитайте токи КЗ в минимальном режиме и проверьте чувствительность электромагнитов после дешунтирования.</li>
+<li>Составьте список команд, которым нужна энергия без тока КЗ: АВР, управление, сигнализация.</li>
+<li>Выберите блок питания или накопитель для этих команд и отметьте решение в опросном листе.</li>
+</ol>
+
+<div class="box-estra">
+<h3>Как это сделано в устройствах ЭСТРА</h3>
+<p>Серия МКЗП-МИКРО 2.0 выпускается в исполнениях с питанием от токовых цепей и дешунтированием. Для схем без гарантированного оперативного тока есть блоки питания БПТ-01 и БПТ-ДШ и блок конденсаторов ЭСТРА-БК.</p>
+<div class="prods">
+<a class="btn" href="${SITE}/product/seriya-mkzp-mikro-2-0/" target="_blank" rel="noopener">МКЗП-МИКРО 2.0</a>
+<a class="btn btn--ghost" href="${SITE}/product/byudzhetnoe-mikroprotsessornoe-ustroystvo-releynoy-zashchity-i-avtomatiki-estra-rele/estra-rele/" target="_blank" rel="noopener">ЭСТРА-РЕЛЕ</a>
+<a class="btn btn--ghost" href="${SITE}/product/bloki-pitaniya/bpt-01/" target="_blank" rel="noopener">БПТ-01</a>
+<a class="btn btn--ghost" href="${SITE}/product/bloki-pitaniya/bpt-dsh/" target="_blank" rel="noopener">БПТ-ДШ</a>
+<a class="btn btn--ghost" href="${SITE}/product/bloki-pitaniya/estra-bk/" target="_blank" rel="noopener">ЭСТРА-БК</a>
+</div>
+</div>
+
+<p><b>Подробнее в статье:</b> <a href="${SITE}/articles/deshuntirovanie-v-rza-printsip-skhema-i-realizatsiya-na-mikroprotsessornom-terminale/" target="_blank" rel="noopener">Дешунтирование в РЗА</a>.</p>
+
+<div class="src">Источники
+<ul>
+<li>ПУЭ, 7-е изд., пп. 3.2.24, 3.2.31, 3.2.32.</li>
+<li>Приказ Минэнерго России № 6 (2024), пп. 126, 145.</li>
+<li>Руководство по эксплуатации МКЗП-МИКРО 2.0, версия 1.18, разд. 3 «Выходы дешунтирования», табл. 2.10.</li>
+<li>Чернобровов Н.В., Семёнов В.А. Релейная защита энергетических систем, гл. 4: блоки питания и дешунтирование.</li>
+</ul></div>
+`,
+  'razomknutyy-treugolnik-tn': `
+<h2 id="kak">Как работает разомкнутый треугольник</h2>
+
+<p>Вторичные обмотки трёх фаз ТН соединяют последовательно в разомкнутый треугольник и измеряют напряжение на выводах цепи. В нормальном режиме фазные напряжения симметричны, их сумма равна нулю, и на выводах напряжения нет. При КЗ без земли сумма тоже равна нулю.</p>
+
+<p>При замыкании на землю в фазных напряжениях появляется составляющая нулевой последовательности. Сумма перестаёт быть нулевой, и на выводах возникает напряжение Uр = 3U0/nТН. Составляющие прямой и обратной последовательности дают в сумме нуль, поэтому схема работает как фильтр напряжения нулевой последовательности.</p>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Режим</th><th>Напряжение на выводах разомкнутого треугольника</th></tr></thead>
+<tbody>
+<tr><td>Нормальный режим</td><td>Практически ноль. Исправная цепь показывает небаланс порядка 1–3 В</td></tr>
+<tr><td>Междуфазное КЗ без земли</td><td>Ноль</td></tr>
+<tr><td>Замыкание на землю</td><td>Появляется 3U0. При металлическом замыкании в сети с изолированной нейтралью и номинальных обмотках 100/3 В — около 100 В</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="zachem">Зачем нужно напряжение 3U0</h2>
+
+<ul>
+<li>пуск защиты от ОЗЗ и общая сигнализация замыкания на землю на секции;</li>
+<li>поляризация органа направления мощности нулевой последовательности в направленных защитах от ОЗЗ;</li>
+<li>измерение и регистрация: у МКЗП-МИКРО 2.0 для разомкнутого треугольника предусмотрены отдельные зажимы, 3U0 измеряется как отдельная величина.</li>
+</ul>
+
+<h2 id="usloviya">Условия правильной работы</h2>
+
+<ul>
+<li><b>Нейтраль первичной обмотки ТН заземлена.</b> Без заземления к обмоткам подводятся напряжения относительно изолированной нейтрали, их сумма всегда равна нулю, и при замыкании на землю на выходе напряжения не будет.</li>
+<li><b>Подходящий тип ТН.</b> Это три однофазных ТН или один пятистержневой. Трёхстержневой ТН не подходит: в его магнитопроводе нет пути для потоков нулевой последовательности.</li>
+<li><b>Номинальное напряжение обмотки.</b> Для разомкнутого треугольника обмотку выбирают на 100 В в сетях с заземлённой нейтралью и на 100/3 В в сетях с изолированной нейтралью.</li>
+<li><b>Контроль цепи.</b> Периодически измеряют напряжение небаланса: при исправной цепи вольтметр показывает 1–3 В, при нарушении показания пропадают.</li>
+<li><b>Защита от перенапряжений.</b> В сетях с малыми токами ОЗЗ при смещении нейтрали в разомкнутый треугольник при необходимости включают резистор (ПУЭ, п. 3.4.26).</li>
+</ul>
+
+<div class="box-estra">
+<h3>Как это сделано в устройствах ЭСТРА</h3>
+<p>Вход напряжения нулевой последовательности есть в МКЗП-МИКРО 2.0: два зажима для подключения разомкнутого треугольника. Если разомкнутого треугольника нет, вход 3U0 можно использовать для измерения фазного напряжения, и тогда 3U0 вычисляется устройством.</p>
+<div class="prods">
+<a class="btn" href="${SITE}/product/seriya-mkzp-mikro-2-0/" target="_blank" rel="noopener">МКЗП-МИКРО 2.0</a>
+</div>
+</div>
+
+<p><b>Подробнее в статье:</b> <a href="${SITE}/articles/zashchita-ot-odnofaznykh-zamykaniy-na-zemlyu-v-setyakh-6-35-kv/" target="_blank" rel="noopener">Защита от ОЗЗ в сетях 6–35 кВ</a>.</p>
+
+<div class="src">Источники
+<ul>
+<li>Чернобровов Н.В., Семёнов В.А. Релейная защита энергетических систем, § 6-3, 6-4, § 8-3.</li>
+<li>ПУЭ, 7-е изд., п. 3.4.26.</li>
+<li>Руководство по эксплуатации МКЗП-МИКРО 2.0, версия 1.18, разд. 3 «Входы напряжения».</li>
+</ul></div>
+`,
+  'pereryv-pitaniya-mp-terminala': `
+<h2 id="re">Что указано в руководствах по эксплуатации</h2>
+
+<p>Допустимый перерыв питания — время, в течение которого терминал сохраняет работоспособность при пропадании оперативного питания. Значение зависит от устройства и указано в его руководстве по эксплуатации.</p>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Устройство</th><th>Допустимый перерыв питания</th><th>Готовность после подачи питания</th></tr></thead>
+<tbody>
+<tr><td>МКЗП-МИКРО 2.0</td><td>Не менее 4 с (табл. 2.10)</td><td>Не более 100 мс; при питании от токовых цепей не более 150 мс при токе не менее 5 А</td></tr>
+<tr><td>ЭСТРА-ДЗТ</td><td>Не менее 2 с (табл. 2.9)</td><td>Не более 300 мс</td></tr>
+</tbody>
+</table></div>
+
+<p>Значения даны для питания переменным напряжением 220 В. Для других условий уточняйте у производителя.</p>
+
+<h2 id="chto">Что происходит при перерыве</h2>
+
+<ul>
+<li><b>Перерыв короче допустимого.</b> Устройство продолжает работать. Готовность АПВ при этом сбрасывается, и после восстановления питания её набирают заново.</li>
+<li><b>Перерыв дольше допустимого.</b> Устройство отключается, а после восстановления питания запускается заново. До готовности защиты нет.</li>
+<li><b>Ложные срабатывания.</b> Устройство не срабатывает ложно при включении и отключении питания и после перерывов питания любой длительности с последующим восстановлением. Оно также не повреждается при подаче напряжения обратной полярности и при замыканиях на землю в сети оперативного тока.</li>
+</ul>
+
+<h2 id="proektirovanie">Что учесть при проектировании</h2>
+
+<ul>
+<li><b>Время переключения источников.</b> Если питание терминалов переключается автоматом ввода резерва шин собственных нужд, сравните его время с допустимым перерывом.</li>
+<li><b>Питание от USB.</b> Это режим настройки: работа выходных реле не гарантируется, возможны сигналы неисправности АЦП и дуговой защиты.</li>
+<li><b>Схемы с негарантированным оперативным током.</b> При питании от токовых цепей учитывайте время готовности и минимальный ток запуска: для МКЗП-МИКРО 2.0 это 2,5 А в одной фазе.</li>
+</ul>
+
+<div class="src">Источники
+<ul>
+<li>Руководство по эксплуатации МКЗП-МИКРО 2.0, версия 1.18, разд. 2, табл. 2.10; п. 4.2.2 «АПВ».</li>
+<li>Руководство по эксплуатации ЭСТРА-ДЗТ, версия 1.09, разд. 2, табл. 2.9.</li>
+</ul></div>
+`,
+  'odin-ttnp-na-dva-kabelya': `
+<h2 id="princip">Принцип: ТТНП суммирует токи всех проводников в окне</h2>
+
+<p>Трансформатор тока нулевой последовательности охватывает все жилы кабеля. Токи фаз создают в магнитопроводе потоки, которые складываются, и вторичный ток пропорционален сумме токов, то есть 3I0. Все проводники, проходящие через окно, образуют первичную обмотку.</p>
+
+<p>Из этого следует, что два кабеля одного присоединения можно пропустить через одно окно: суммарный ток шести жил равен 3I0 присоединения. Для этого нужно соблюсти условия ниже.</p>
+
+<h2 id="varianty">Варианты для двух кабелей одного присоединения</h2>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Вариант</th><th>Условия</th><th>На что обратить внимание</th></tr></thead>
+<tbody>
+<tr><td>Один ТТНП, оба кабеля в одном окне</td><td>Через окно проходят все жилы обоих кабелей. Размер окна позволяет это сделать с учётом разделки кабелей</td><td>Несимметричное расположение жил увеличивает ток небаланса. Заземляющие проводники экранов пропускают, как описано в вопросе про экран</td></tr>
+<tr><td>Свой ТТНП на каждый кабель, вторичные обмотки параллельно</td><td>ТТНП одного типа, токи кабелей суммируются во вторичной цепи</td><td>Чувствительность проверяют по данным ТТНП и входа терминала: ток небаланса и нагрузка растут</td></tr>
+</tbody>
+</table></div>
+
+<p>Нельзя пропускать через одно окно кабели разных присоединений. ТТНП измерит сумму их токов, и защита не сможет определить, на каком присоединении замыкание.</p>
+
+<h2 id="proverit">Что проверить</h2>
+
+<ol>
+<li>Хватает ли окна для обоих кабелей вместе с разделкой и заземляющими проводниками экранов.</li>
+<li>Одинаковы ли длины и прокладка кабелей: при разном расположении увеличивается ток небаланса.</li>
+<li>Достаточна ли чувствительность. Для ТТНП типа ТЗЛ, ТЗЛМ и входа 0,2 А в МКЗП-МИКРО 2.0 чувствительность по первичному току доходит до 0,3 А. С учётом небаланса и режима нейтрали значение проверяют расчётом.</li>
+<li>Работу схемы проверяют первичным током на месте: ТТНП должен показывать ожидаемый ток нулевой последовательности.</li>
+</ol>
+
+<p>Решение по двум кабелям в одном окне — вывод из принципа суммирования потоков. Окончательно его подтверждают по паспорту ТТНП и результатам наладки.</p>
+
+<div class="box-estra">
+<h3>Как это сделано в устройствах ЭСТРА</h3>
+<p>Вход тока нулевой последовательности в МКЗП-МИКРО 2.0 рассчитан на 0,2 А. С ТТНП типа ТЗЛ или ТЗЛМ без дополнительной нагрузки во вторичной цепи чувствительность по первичному току замыкания доходит до 0,3 А.</p>
+<div class="prods">
+<a class="btn" href="${SITE}/product/seriya-mkzp-mikro-2-0/" target="_blank" rel="noopener">МКЗП-МИКРО 2.0</a>
+</div>
+</div>
+
+<p><b>Подробнее в статье:</b> <a href="${SITE}/articles/zashchita-ot-odnofaznykh-zamykaniy-na-zemlyu-v-setyakh-6-35-kv/" target="_blank" rel="noopener">Защита от ОЗЗ в сетях 6–35 кВ</a>.</p>
+
+<div class="src">Источники
+<ul>
+<li>Чернобровов Н.В., Семёнов В.А. Релейная защита энергетических систем, гл. 9: принцип действия ТТНП.</li>
+<li>Шнеерсон Э.М. Цифровая релейная защита, § 4.3: кабельный трансформатор тока.</li>
+<li>Методические указания по расчёту уставок защит распределительных сетей 6–35 кВ (НГТУ–ЭСТРА, 2026), ч. 1, п. 2.2.</li>
+<li>ПУЭ, 7-е изд., п. 3.2.97: защита от ОЗЗ на ТТНП.</li>
+</ul></div>
+`,
+  'otsechka-dvigatelya-pri-puske': `
+<h2 id="tok">Какой ток видит защита при пуске</h2>
+
+<p>При пуске асинхронного двигателя сопротивление ротора мало, и ток статора максимален. Начальный пусковой ток равен току трёхфазного КЗ за сопротивлением неподвижного двигателя. Он состоит из периодической составляющей и апериодической, которая затухает за несколько периодов.</p>
+
+<ul>
+<li>Периодическая составляющая при неподвижном роторе обычно в 4–8 раз превосходит номинальный ток, в отдельных случаях больше.</li>
+<li>Пик тока с учётом апериодической составляющей выше действующего значения периодической.</li>
+<li>Время спада тока до номинального зависит от параметров двигателя и нагрузки: при пуске под нагрузкой ротор разгоняется медленнее, и спад длится дольше.</li>
+</ul>
+
+<h2 id="prichiny">Почему отсечка срабатывает</h2>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Причина</th><th>Что происходит</th><th>Мера</th></tr></thead>
+<tbody>
+<tr><td>Мал запас по пусковому току</td><td>Уставка выбрана ниже расчётной или пусковой ток взят неточно</td><td>Пусковой ток берут по данным завода или по результатам испытаний. Ток срабатывания отсечки: Iсз = kн · Iп.пуск, kн обычно 1,2</td></tr>
+<tr><td>Апериодическая составляющая</td><td>В первые периоды пуска пик тока выше периодической составляющей, терминал видит больший ток</td><td>Электромеханические отсечки отстраивали выдержкой 0,04–0,06 с. Для микропроцессорного терминала запас проверяют по осциллограмме реального пуска</td></tr>
+<tr><td>Насыщение ТТ</td><td>Апериодическая составляющая насыщает сердечник, вторичный ток искажается</td><td>Проверка ТТ: <a href="#/q/tt-ne-prokhodit-po-nasyshcheniyu">Что делать, если трансформатор тока не проходит по насыщению?</a></td></tr>
+<tr><td>Пуск при нетиповых условиях</td><td>Пуск после остановки, с нагрузкой на валу, при пониженном напряжении</td><td>Загрубление уставок на время пуска по признаку предшествующей паузы без тока</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="vybor">Как выбрать и проверить уставку</h2>
+
+<ol>
+<li>Получите пусковой ток по данным завода-изготовителя двигателя или по испытаниям. Определяющим условием для отсечки, как правило, служит отстройка от пускового тока при полном напряжении сети.</li>
+<li>Рассчитайте ток срабатывания с запасом kн = 1,2.</li>
+<li>Проверьте чувствительность при двухфазном КЗ на выводах двигателя. Для крупных двигателей с большими пусковыми токами однорелейная схема может не дать нужной чувствительности, тогда применяют двухрелейную.</li>
+<li>Снимите осциллограмму реального пуска и сравните пик тока с уставкой.</li>
+<li>Если отстроиться не удаётся, рассмотрите дифференциальную защиту двигателя: пусковые токи и броски при внешних КЗ в ней сбалансированы, и чувствительность выше.</li>
+</ol>
+
+<div class="box-estra">
+<h3>Как это сделано в устройствах ЭСТРА</h3>
+<p>Защита электродвигателей до 4 МВт входит в функции МКЗП-МИКРО 2.0. В руководстве по эксплуатации приведены тепловая модель двигателя, расчёт постоянной времени нагрева, диагностика тяжёлого пуска («Тяжелый пуск»), запрет повторного пуска и ограничение числа пусков.</p>
+<div class="prods">
+<a class="btn" href="${SITE}/product/seriya-mkzp-mikro-2-0/mkzp-mikro-2-0-3/" target="_blank" rel="noopener">МКЗП-МИКРО 2.0-3</a>
+</div>
+</div>
+
+<div class="src">Источники
+<ul>
+<li>Чернобровов Н.В., Семёнов В.А. Релейная защита энергетических систем, гл. 18: защита электродвигателей.</li>
+<li>Шнеерсон Э.М. Цифровая релейная защита, гл. 9: защита электродвигателей, рис. 9.15.</li>
+<li>Руководство по эксплуатации МКЗП-МИКРО 2.0, версия 1.18, приложение «Защита электродвигателя».</li>
+</ul></div>
+`,
+  'ekran-kabelya-cherez-ttnp': `
+<h2 id="zachem">Зачем экран пропускают через ТТНП</h2>
+
+<p>ТТНП суммирует токи всех проводников в окне. У кабеля с металлической оболочкой или бронёй наиболее вероятно замыкание жилы на оболочку. Ток замыкания идёт по жиле, а возвращается по оболочке, причём оба проводника проходят через окно ТТНП в противоположных направлениях. Если оболочку заземлить мимо окна, их потоки взаимно компенсируются, и ТТНП не видит замыкания.</p>
+
+<p>Вторая причина — токи, которые могут идти по оболочке и броне в других режимах. Они искажают измерение, и их влияние нужно компенсировать.</p>
+
+<h2 id="kak">Как выполнить</h2>
+
+<ol>
+<li>Оболочку и броню кабеля на участке от воронки (концевой муфты) до ТТНП изолируйте от земли.</li>
+<li>Заземляющий проводник присоедините к воронке кабеля и пропустите через окно ТТНП.</li>
+<li>Тогда ток, идущий по оболочке или броне, возвращается по заземляющему проводу, и магнитные потоки от этих токов в магнитопроводе взаимно уничтожаются. ТТНП измеряет только ток жил.</li>
+<li>Магнитопровод ТТНП надёжно изолируйте от брони кабеля.</li>
+</ol>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Исполнение</th><th>Что видит ТТНП при замыкании жилы на оболочку</th></tr></thead>
+<tbody>
+<tr><td>Заземляющий проводник экрана проходит через окно ТТНП</td><td>Ток замыкания по жиле. Защита работает</td></tr>
+<tr><td>Экран заземлён мимо окна ТТНП</td><td>Токи жилы и оболочки взаимно компенсируются. Защита не работает</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="proverit">Что проверить при монтаже и наладке</h2>
+
+<ul>
+<li>Участок оболочки и брони от воронки до ТТНП не касается заземлённых конструкций.</li>
+<li>Заземляющий проводник проходит через окно один раз и в нужном направлении.</li>
+<li>Для нескольких кабелей на одном ТТНП схему заземления экранов выполняют для каждого кабеля: <a href="#/q/odin-ttnp-na-dva-kabelya">Можно ли ставить один ТТНП на два кабеля?</a></li>
+<li>Работу схемы проверяют первичным током при наладке.</li>
+</ul>
+
+<p><b>Подробнее в статье:</b> <a href="${SITE}/articles/zashchita-ot-odnofaznykh-zamykaniy-na-zemlyu-v-setyakh-6-35-kv/" target="_blank" rel="noopener">Защита от ОЗЗ в сетях 6–35 кВ</a>.</p>
+
+<div class="src">Источники
+<ul>
+<li>Чернобровов Н.В., Семёнов В.А. Релейная защита энергетических систем, гл. 9, рис. 9-9: компенсация токов в оболочке и броне кабеля.</li>
+<li>Шнеерсон Э.М. Цифровая релейная защита, § 4.3, рис. 4.19: правильное и неправильное заземление оболочки.</li>
+</ul></div>
+`,
+  'tok-kz-v-kontse-vl-raven-toku-nagruzki': `
+<h2 id="problema">В чём проблема</h2>
+
+<p>МТЗ головного выключателя отстраивают от максимального рабочего тока с учётом самозапуска и возврата реле. Минимальный ток двухфазного КЗ в конце протяжённой ВЛ в минимальном режиме может оказаться близким к этой уставке или ниже её. Тогда коэффициент чувствительности меньше нормируемого.</p>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Защита</th><th>Наименьший коэффициент чувствительности (ПУЭ, п. 3.2.21)</th></tr></thead>
+<tbody>
+<tr><td>МТЗ, основная зона</td><td>около 1,5</td></tr>
+<tr><td>Дальнее резервирование: КЗ в конце смежного элемента</td><td>1,2</td></tr>
+<tr><td>Защита от ОЗЗ на ВЛ</td><td>около 1,5</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="mery">Что можно сделать</h2>
+
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Мера</th><th>Что даёт</th><th>Условия</th></tr></thead>
+<tbody>
+<tr><td>Секционирование ВЛ пунктами секционирования (реклоузерами)</td><td>Линия делится на участки, у каждого своя МТЗ с уставкой по нагрузке этого участка, и ток КЗ в конце участка заметно превышает уставку</td><td>Нужно согласовать АПВ: для последовательных участков ПУЭ допускают поочерёдное АПВ или АПВ с кратностью до трёх (п. 3.3.21)</td></tr>
+<tr><td>Направленные защиты при двустороннем питании или кольце</td><td>Селективность и чувствительность при питании с двух сторон</td><td>Нужен орган направления мощности и цепи напряжения (ПУЭ, пп. 3.2.94, 3.2.102–3.2.105)</td></tr>
+<tr><td>Другой принцип защиты</td><td>Дистанционная защита вместо токовой; для ОЗЗ направленная или на высших гармониках вместо ненаправленной</td><td>Для ВЛ 35 кВ, если ступенчатых защит тока недостаточно, ПУЭ допускают дистанционную защиту с пуском по току и токовой отсечкой (п. 3.2.101)</td></tr>
+<tr><td>Более чувствительная схема включения ТТ и уточнение коэффициентов</td><td>Повышение чувствительности без смены защиты</td><td>Трёхрелейная схема допускается для чувствительности за трансформаторами с соединением Y/Δ (п. 3.2.99). Уточняют состав нагрузки и коэффициент самозапуска</td></tr>
+<tr><td>Отказ от дальнего резервирования конца длинного смежного участка</td><td>Допускается, если обеспечить его нельзя</td><td>Решение принимают с оценкой последствий: важности потребителей и повреждаемости</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="proverka">Как проверить</h2>
+
+<ol>
+<li>Рассчитайте минимальный ток двухфазного КЗ в конце линии в минимальном режиме системы.</li>
+<li>Рассчитайте ток срабатывания МТЗ по максимальному рабочему току с запасами.</li>
+<li>Определите коэффициент чувствительности. Если он меньше нормируемого, выберите меру из таблицы и рассчитайте заново.</li>
+<li>Для секционирования определите места пунктов, уставки каждого участка и циклы АПВ так, чтобы защиты участков были согласованы по времени.</li>
+</ol>
+
+<div class="box-estra">
+<h3>Как это сделано в устройствах ЭСТРА</h3>
+<p>ЭСТРА-ПС — блок защиты для реклоузеров и пунктов секционирования ВЛ. В нём до 4 ступеней МТЗ (до 8 для присоединений с двусторонним питанием) с органом направления мощности, АПВ до четырёх циклов, сетевой АВР, логическая защита. Параметры вводятся в первичных величинах.</p>
+<div class="prods">
+<a class="btn" href="${SITE}/product/ustroystva-zashchity-dlya-re-louzerov/estra-ps/" target="_blank" rel="noopener">ЭСТРА-ПС</a>
+</div>
+</div>
+
+<p><b>Подробнее в статье:</b> <a href="${SITE}/articles/proektirovanie-releynoy-zashchity-6-35-kv-sostav-proekta-etapy-i-normy/" target="_blank" rel="noopener">Проектирование релейной защиты 6–35 кВ</a>.</p>
+
+<div class="src">Источники
+<ul>
+<li>ПУЭ, 7-е изд., пп. 3.2.21, 3.2.93, 3.2.94, 3.2.99, 3.2.101–3.2.105, 3.3.21.</li>
+<li>Методические указания по расчёту уставок защит распределительных сетей 6–35 кВ (НГТУ–ЭСТРА, 2026), ч. 1, гл. 1: изменение принципа защиты и дальнее резервирование.</li>
+<li>Руководство по эксплуатации ЭСТРА-ПС/ТТ, версия 1.20.</li>
+</ul></div>
+`
+};
+
+const Q = [
+  {r:'zashchita-shin', slug:'lzsh-pri-tsn-na-predokhranitelyakh', q:'Можно ли сделать ЛЗШ, если ТСН подключён к шинам через предохранители?',
+   short:'Можно, но ячейка ТСН с предохранителем не отправляет на ввод сигнал блокировки ЛЗШ. Поэтому уставку и выдержку ЛЗШ проверяют по времятоковой характеристике предохранителя. Если согласовать их не удаётся, в ячейку ТСН ставят токовую защиту для блокировки или подключают ТСН до вводного выключателя.',
+   full: LZSH_FULL, date:'21.10.2026'},
+  {r:'zashchita-shin', slug:'vyderzhka-vremeni-lzsh', q:'Какую выдержку времени ставить на ЛЗШ?',
+   short:'На практике 0,1–0,3 с. Выдержка должна перекрывать время, за которое защиты отходящих присоединений пускаются и передают сигнал блокировки. Время отключения выключателя линии в неё не входит: блокировка держится, пока КЗ не отключено. В МКЗП-МИКРО 2.0 заводское значение 0,2 с.'},
+  {r:'zashchita-shin', slug:'blokirovka-avr-pri-lzsh', q:'Нужно ли блокировать АВР секционного выключателя при срабатывании ЛЗШ?',
+   short:'Да. Срабатывание ЛЗШ означает КЗ на шинах секции, и АВР включил бы секционный выключатель на повреждение. Поэтому сигнал отключения ввода от защит, действующих при КЗ на шинах, запрещает АВР.',
+   article:{t:'Автоматический ввод резерва в сетях 6–35 кВ', u:'/articles/avtomaticheskiy-vvod-rezerva-avr-printsip-raboty-ustavki-i-primenenie-v-setyakh-6-35-kv/'}},
+  {r:'zashchita-shin', slug:'dugovaya-zashchita-ne-otklyuchila-vvod', q:'Почему дуговая защита не отключила ввод при дуге на шинах?',
+   short:'Чаще всего не было подтверждения по току. При дуге с малым током, например при ОЗЗ в сети с резистивным заземлением нейтрали, ток ниже уставки пускового органа МТЗ ввода. Датчик видит вспышку, но без контроля тока отключение не проходит.'},
+  {r:'zashchita-shin', slug:'pusk-dugovoy-zashchity-ot-ozz', q:'Можно ли пускать дуговую защиту от защиты от ОЗЗ?',
+   short:'Такой пуск применяют, чтобы дуговая защита работала при дуговых ОЗЗ, которые не дают тока для пуска МТЗ. Решение принимают с учётом режима нейтрали и того, допустимо ли на объекте отключение при ОЗЗ.'},
+
+  {r:'zashchita-shin', slug:'nuzhen-li-urov-na-6-10-kv', q:'Нужен ли УРОВ на выключателях 6–10 кВ?',
+   short:'ПУЭ (п. 3.2.18) требуют УРОВ для 110–500 кВ. На ПС 35 кВ и выше Приказ Минэнерго № 6 (п. 189) требует УРОВ на выключателях 6–35 кВ, отказ которых не резервируется защитами других присоединений. Для отдельных РП решает проект: УРОВ нужен там, где отказ выключателя нечем резервировать.',
+   article:{t:'Проектирование релейной защиты 6–35 кВ', u:'/articles/proektirovanie-releynoy-zashchity-6-35-kv-sostav-proekta-etapy-i-normy/'}},
+  {r:'opertok-i-tt', slug:'tt-ne-prokhodit-po-nasyshcheniyu', q:'Что делать, если трансформатор тока не проходит по насыщению?',
+   short:'Нужно снизить вторичную нагрузку или поднять допустимую. Нагрузку снижают сечением жил, длиной кабеля и переходом на вторичный ток 1 А: одноамперный ТТ допускает сопротивление нагрузки в 25 раз больше пятиамперного. Если не хватает, выбирают ТТ с большим коэффициентом трансформации. Полная погрешность не должна превышать 10 %.',
+   article:{t:'Как выбрать трансформатор тока для устройств РЗА', u:'/articles/kak-vybrat-transformator-toka-dlya-ustroystv-rza/'}},
+  {r:'ozz', slug:'rezistivnoe-zazemlenie-i-zashchity', q:'Что меняется в защитах при переходе сети 6–10 кВ на резистивное заземление нейтрали?',
+   short:'Ток ОЗЗ задаёт резистор: при низкоомном заземлении (около 100 Ом в сети 6 кВ и 150 Ом в сети 10 кВ) это порядка 40 А. Защита от ОЗЗ в таком режиме, как правило, токовая, на ТТНП, с действием на отключение, а уставки считают от тока резистора, а не от ёмкостного тока сети.',
+   article:{t:'Защита от ОЗЗ в сетях 6–35 кВ', u:'/articles/zashchita-ot-odnofaznykh-zamykaniy-na-zemlyu-v-setyakh-6-35-kv/'}},
+  {r:'opertok-i-tt', slug:'rp-na-peremennom-operativnom-toke', q:'Можно ли сделать РП 6–10 кВ на переменном оперативном токе без аккумуляторной батареи?',
+   short:'Можно. РП работают на переменном или выпрямленном оперативном токе с питанием от ТСН и трансформаторов тока, а выключатели отключают дешунтированием или от конденсаторных блоков.',
+   article:{t:'Дешунтирование в РЗА', u:'/articles/deshuntirovanie-v-rza-printsip-skhema-i-realizatsiya-na-mikroprotsessornom-terminale/'}},
+  {r:'ozz', slug:'razomknutyy-treugolnik-tn', q:'Для чего нужен разомкнутый треугольник трансформатора напряжения?',
+   short:'Это фильтр напряжения нулевой последовательности. В норме на его выводах напряжения нет, а при замыкании на землю появляется 3U0, которое пускает защиту от ОЗЗ и сигнализацию. Схема работает только при заземлённой нейтрали первичной обмотки и пятистержневом (или трёх однофазных) ТН.',
+   article:{t:'Защита от ОЗЗ в сетях 6–35 кВ', u:'/articles/zashchita-ot-odnofaznykh-zamykaniy-na-zemlyu-v-setyakh-6-35-kv/'}},
+
+  {r:'opertok-i-tt', slug:'pereryv-pitaniya-mp-terminala', q:'Сколько выдерживает микропроцессорный терминал при перерыве оперативного питания?',
+   short:'Время указано в руководстве по эксплуатации конкретного устройства. МКЗП-МИКРО 2.0 сохраняет работоспособность при перерыве питания не менее 4 с, ЭСТРА-ДЗТ не менее 2 с. После перерывов любой длительности устройство не срабатывает ложно.'},
+  {r:'ozz', slug:'odin-ttnp-na-dva-kabelya', q:'Можно ли ставить один ТТНП на два кабеля?',
+   short:'Можно, если оба кабеля одного присоединения проходят через окно ТТНП вместе и размер окна это позволяет. Другой вариант: свой ТТНП на каждый кабель с параллельным соединением вторичных обмоток.',
+   article:{t:'Защита от ОЗЗ в сетях 6–35 кВ', u:'/articles/zashchita-ot-odnofaznykh-zamykaniy-na-zemlyu-v-setyakh-6-35-kv/'}},
+  {r:'dvigateli-i-linii', slug:'otsechka-dvigatelya-pri-puske', q:'Почему токовая отсечка двигателя срабатывает при пуске?',
+   short:'Отсечка отстроена от пускового тока с недостаточным запасом. В первые периоды пуска апериодическая составляющая и погрешность трансформаторов тока увеличивают ток, который видит терминал. Уставку проверяют по осциллограмме реального пуска.'},
+  {r:'ozz', slug:'ekran-kabelya-cherez-ttnp', q:'Как пропускать экран кабеля через ТТНП?',
+   short:'Если экран заземлён со стороны концевой муфты, а ТТНП стоит ниже, заземляющий проводник экрана пропускают обратно через окно ТТНП. Тогда токи по экрану взаимно компенсируются и не попадают в измерение.',
+   article:{t:'Защита от ОЗЗ в сетях 6–35 кВ', u:'/articles/zashchita-ot-odnofaznykh-zamykaniy-na-zemlyu-v-setyakh-6-35-kv/'}},
+  {r:'dvigateli-i-linii', slug:'tok-kz-v-kontse-vl-raven-toku-nagruzki', q:'Что делать, если ток КЗ в конце ВЛ 10 кВ почти равен току нагрузки?',
+   short:'МТЗ головного выключателя здесь не обеспечит чувствительность. Линию делят на участки пунктами секционирования с реклоузерами, у каждого своя МТЗ. При двустороннем питании нужна направленная защита.'}
+];
+Q.forEach(x => { x.date = x.date || '21.10.2026'; });
+Q.forEach(x => { if (!x.full && FULL[x.slug]) x.full = FULL[x.slug]; });
+const rubName = s => (RUBRICS.find(r => r.slug === s) || {}).name;
+const count = s => Q.filter(x => x.r === s).length;
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const arrowR = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const arrowL = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+const app = document.getElementById('app');
+const fakeUrl = document.getElementById('fakeUrl');
+
+function crumbs(items){
+  return '<nav class="crumbs" aria-label="Хлебные крошки">' + items.map((it, i) =>
+    (i ? '<span class="sep">—</span>' : '') + (it.href ? `<a href="${it.href}">${esc(it.t)}</a>` : `<span>${esc(it.t)}</span>`)
+  ).join('') + '</nav>';
+}
+
+function formBlock(){
+  return `
+  <section class="support-bar" id="form">
+    <span class="sb-icon" aria-hidden="true"><svg width="62" height="72" viewBox="0 0 62 72" fill="none"><rect x="12" y="12" width="46" height="56" rx="6" fill="#E8F0F8"/><rect x="3" y="3" width="46" height="56" rx="6" fill="#fff" stroke="#00549F" stroke-width="3"/><path d="M14 18h24M14 26h24M14 34h24M14 42h24M14 50h14" stroke="#00549F" stroke-width="3" stroke-linecap="round"/></svg></span>
+    <p class="sb-text">Получите бесплатную круглосуточную тех. поддержку по номеру <a href="tel:+78003332083">+7 (800) 333-20-83</a> или оставьте нам заявку</p>
+    <a class="btn sb-btn" href="${SITE}/support/" target="_blank" rel="noopener">Задать вопрос</a>
+  </section>`;
+}
+
+function articlesBlock(){
+  const A = [
+    {k:'ОЗЗ', t:'Защита от однофазных замыканий на землю в сетях 6–35 кВ', u:'/articles/zashchita-ot-odnofaznykh-zamykaniy-na-zemlyu-v-setyakh-6-35-kv/'},
+    {k:'Автоматика', t:'Автоматический ввод резерва: принцип работы и уставки', u:'/articles/avtomaticheskiy-vvod-rezerva-avr-printsip-raboty-ustavki-i-primenenie-v-setyakh-6-35-kv/'},
+    {k:'Оперативный ток', t:'Дешунтирование в РЗА: принцип, схема, реализация', u:'/articles/deshuntirovanie-v-rza-printsip-skhema-i-realizatsiya-na-mikroprotsessornom-terminale/'},
+    {k:'Проектирование', t:'Проектирование релейной защиты 6–35 кВ', u:'/articles/proektirovanie-releynoy-zashchity-6-35-kv-sostav-proekta-etapy-i-normy/'}
+  ];
+  return `<h2>Подробнее в статьях</h2><div class="cards4">` + A.map(a =>
+    `<a class="acard" href="${SITE}${a.u}" target="_blank" rel="noopener"><span class="k">${a.k}</span><b>${a.t}</b><span class="go">Читать статью →</span></a>`).join('') + '</div>';
+}
+
+const PER_PAGE = 5; // в прототипе 5, чтобы пагинация была видна; на сайте 30
+const hubHref = (filter, page) => (filter ? `#/tema/${filter}` : '#') + (page > 1 ? `/page/${page}` : '/');
+const BASE = '/support/voprosy-po-rza/';
+const hubUrl = (filter, page) => (filter ? `${BASE}tema/${filter}/` : BASE) + (page > 1 ? `?PAGEN_1=${page}` : '');
+const SECTION = 'Вопросы по релейной защите';
+const SUPPORT_MENU = [
+  {t:'Техническая поддержка', u:'/support/index.php'},
+  {t:'Помощь в проектировании и типовые решения', u:'/support/help/'},
+  {t:'Программное обеспечение', u:'/support/software/'},
+  {t:'Вопросы по устройствам ЭСТРА', u:'/support/chasto-zadavaemye-voprosy/'},
+  {t:SECTION, here:true},
+  {t:'Инструкции и чек-листы', u:'/support/instruktsii-i-chek-listy/'},
+  {t:'Видео-инструкции', u:'/support/video-instructions/'}
+];
+function supportMenu(){
+  return '<nav aria-label="Раздел поддержки"><ul class="smenu">' + SUPPORT_MENU.map(m => m.here
+    ? `<li><a class="on" href="#/" aria-current="page">${m.t}</a></li>`
+    : `<li><a href="${SITE}${m.u}" target="_blank" rel="noopener">${m.t}</a></li>`).join('') + '</ul></nav>';
+}
+const baseCrumbs = () => [{t:'Главная', href:SITE + '/'}, {t:'Техническая поддержка', href:SITE + '/support/'}];
+
+function pagination(filter, page, pages){
+  if (pages < 2) return '';
+  const nums = [];
+  for (let i = 1; i <= pages; i++) {
+    if (i === 1 || i === pages || Math.abs(i - page) <= 1) nums.push(i);
+    else if (nums.at(-1) !== '…') nums.push('…');
+  }
+  const prev = page > 1
+    ? `<a class="pnav-btn" href="${hubHref(filter, page - 1)}" rel="prev" aria-label="Предыдущая страница">${arrowL}</a>`
+    : `<span class="pnav-btn off" aria-hidden="true">${arrowL}</span>`;
+  const next = page < pages
+    ? `<a class="pnav-btn" href="${hubHref(filter, page + 1)}" rel="next" aria-label="Следующая страница">${arrowR}</a>`
+    : `<span class="pnav-btn off" aria-hidden="true">${arrowR}</span>`;
+  return `<nav class="pnav" aria-label="Страницы">${prev}${nums.map(n =>
+    n === '…' ? '<span class="pnav-gap">…</span>'
+    : n === page ? `<span class="pnav-num on" aria-current="page">${n}</span>`
+    : `<a class="pnav-num" href="${hubHref(filter, n)}">${n}</a>`).join('')}${next}</nav>`;
+}
+
+function renderHub(filter, page){
+  const all = filter ? Q.filter(x => x.r === filter) : Q;
+  const pages = Math.max(1, Math.ceil(all.length / PER_PAGE));
+  page = Math.min(Math.max(1, page || 1), pages);
+  const from = (page - 1) * PER_PAGE;
+  const list = all.slice(from, from + PER_PAGE);
+  const chips = [`<a class="chip ${!filter ? 'on' : ''}" href="#/">Все <span class="n">${Q.length}</span></a>`]
+    .concat(RUBRICS.map(r => `<a class="chip ${filter === r.slug ? 'on' : ''}" href="#/tema/${r.slug}">${r.name} <span class="n">${count(r.slug)}</span></a>`)).join('');
+  const cards = list.length ? list.map(x => `
+    <article class="qcard">
+      <h2><a href="#/q/${x.slug}">${esc(x.q)}</a></h2>
+      <p>${esc(x.short)}</p>
+      <div class="qmeta">
+        <a class="tag" href="#/tema/${x.r}">${rubName(x.r)}</a>
+        <span>Обновлено ${x.date}</span>
+        <span class="more" aria-hidden="true">${arrowR}</span>
+      </div>
+    </article>`).join('') : '<div class="empty">В этой рубрике пока нет вопросов</div>';
+  const crumbItems = baseCrumbs().concat([{t:SECTION, href: (filter || page > 1) ? '#/' : null}]);
+  if (filter) crumbItems.push({t: rubName(filter), href: page > 1 ? hubHref(filter, 1) : null});
+  const title = filter ? rubName(filter) + ': вопросы и ответы' : 'Вопросы и ответы по релейной защите 6–35 кВ';
+  const lead = page === 1 ? `<p class="lead">Короткие ответы инженеров НПП «ЭСТРА» на популярные вопросы. Как узнать пароль, сбросить аварию, настроить дешунтирование или разобраться с сообщением о неисправности на устройствах ЭСТРА, читайте в разделе <a href="${SITE}/support/chasto-zadavaemye-voprosy/" target="_blank" rel="noopener">«Вопросы по устройствам ЭСТРА»</a>.</p>` : '';
+  const shown = all.length ? `<p class="pnav-info">Вопросы ${from + 1}–${from + list.length} из ${all.length}</p>` : '';
+  app.innerHTML = crumbs(crumbItems) + `
+    <h1>${title}</h1>
+    <div class="layout">
+      <aside>${supportMenu()}</aside>
+      <div>
+        ${lead}
+        <div class="chips" role="navigation" aria-label="Рубрики">${chips}</div>
+        <div class="qlist">${cards}</div>
+        ${pagination(filter, page, pages)}
+        ${pages > 1 ? shown : ''}
+        ${formBlock()}
+      </div>
+    </div>
+    ${articlesBlock()}`;
+  document.title = title + (page > 1 ? `, страница ${page}` : '') + ' | ЭСТРА';
+  fakeUrl.textContent = hubUrl(filter, page);
+}
+
+function neighbors(idx){
+  const cur = Q[idx];
+  const prev = idx > 0 && Q[idx - 1].r === cur.r ? Q[idx - 1] : null;
+  let next = null, nextOtherRubric = false;
+  if (idx < Q.length - 1) { next = Q[idx + 1]; nextOtherRubric = next.r !== cur.r; }
+  return {prev, next, nextOtherRubric};
+}
+
+function renderQuestion(slug){
+  const idx = Q.findIndex(x => x.slug === slug);
+  if (idx < 0) { location.hash = '#/'; return; }
+  const x = Q[idx];
+  const {prev, next, nextOtherRubric} = neighbors(idx);
+  const used = new Set([x.slug, prev && prev.slug, next && next.slug]);
+  let rel = Q.filter(y => y.r === x.r && !used.has(y.slug));
+  if (rel.length < 3) rel = rel.concat(Q.filter(y => y.r !== x.r && !used.has(y.slug)).slice(0, 3 - rel.length));
+  const body = x.full ? x.full : `
+    <div class="pending"><b>Полный ответ готовится.</b> В прототипе он написан только для первого вопроса раздела: <a href="#/q/${Q[0].slug}">${esc(Q[0].q)}</a></div>
+    ${x.article ? `<p><b>Подробнее в статье:</b> <a href="${SITE}${x.article.u}" target="_blank" rel="noopener">${x.article.t}</a></p>` : ''}`;
+  const pg = (item, dir) => {
+    if (!item) return '<div class="pg ghost"></div>';
+    const label = dir === 'prev' ? `${arrowL} Предыдущий вопрос` : (nextOtherRubric ? `Следующая рубрика ${arrowR}` : `Следующий вопрос ${arrowR}`);
+    const rub = dir === 'next' && nextOtherRubric ? `<span class="rub">${rubName(item.r)}</span>` : '';
+    return `<a class="pg ${dir}" href="#/q/${item.slug}" data-nav="${dir}"><span class="dir">${label}</span>${rub}<b>${esc(item.q)}</b></a>`;
+  };
+  const side = `
+    <aside>
+      ${supportMenu()}
+      <div class="side"><h3>Рубрики</h3><ul>${RUBRICS.map(r =>
+        `<li><a class="${r.slug === x.r ? 'on' : ''}" href="#/tema/${r.slug}"><span>${r.name}</span><span class="n">${count(r.slug)}</span></a></li>`).join('')}</ul></div>
+      <div class="side-cta"><b>Не нашли ответ?</b><p>Бесплатная круглосуточная техподдержка: <a href="tel:+78003332083" style="color:#fff;font-weight:700;white-space:nowrap">+7 (800) 333-20-83</a></p><a class="btn btn--white" href="#form" data-scroll="form">Задать вопрос</a></div>
+    </aside>`;
+  app.innerHTML = crumbs(baseCrumbs().concat([{t:SECTION, href:'#/'}, {t:rubName(x.r), href:'#/tema/' + x.r}, {t: shortCrumb(x.q)}])) + `
+    <h1>${esc(x.q)}</h1>
+    <div class="layout">
+      ${side}
+      <div class="qmain">
+        <div class="author"><div class="ava">Э</div><div><b>Ведущий инженер НПП «ЭСТРА»</b>Опубликовано ${x.date} · <a href="#/tema/${x.r}">${rubName(x.r)}</a></div></div>
+        <div class="short"><div class="lbl">Коротко</div><p>${esc(x.short)}</p></div>
+        <div class="body">${body}</div>
+        <nav class="pager" aria-label="Соседние вопросы">${pg(prev, 'prev')}${pg(next, 'next')}</nav>
+        <div class="allq"><a href="#/">Все вопросы</a></div>
+        <div class="kbd">Можно листать стрелками <span>←</span> <span>→</span></div>
+        <h2>Другие вопросы по теме</h2>
+        <ul class="related">${rel.map(y => `<li><a href="#/q/${y.slug}">${esc(y.q)}</a></li>`).join('')}</ul>
+        ${formBlock()}
+      </div>
+    </div>`;
+  document.title = x.q + ' | ЭСТРА';
+  fakeUrl.textContent = `${BASE}${x.slug}/`;
+}
+
+function shortCrumb(q){
+  const w = q.replace(/\?$/, '').split(' ');
+  return w.length > 6 ? w.slice(0, 6).join(' ') + '…' : q;
+}
+
+function route(){
+  const h = location.hash.replace(/^#/, '') || '/';
+  const m1 = h.match(/^\/q\/([^/]+)/);
+  const m2 = h.match(/^\/tema\/([^/]+)/);
+  const pm = h.match(/\/page\/(\d+)/);
+  const page = pm ? parseInt(pm[1], 10) : 1;
+  if (m1) renderQuestion(m1[1]);
+  else if (m2 && RUBRICS.some(r => r.slug === m2[1])) renderHub(m2[1], page);
+  else renderHub(null, page);
+  window.scrollTo({top: 0, behavior: 'instant'});
+}
+
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-scroll]');
+  if (a) { e.preventDefault(); const el = document.getElementById(a.dataset.scroll); if (el) el.scrollIntoView({behavior:'smooth'}); }
+});
+document.addEventListener('keydown', e => {
+  if (e.target.closest('input, textarea')) return;
+  if (e.key === 'ArrowLeft') { const p = document.querySelector('[data-nav="prev"]'); if (p) location.hash = p.getAttribute('href'); }
+  if (e.key === 'ArrowRight') { const n = document.querySelector('[data-nav="next"]'); if (n) location.hash = n.getAttribute('href'); }
+});
+window.addEventListener('hashchange', route);
+route();
+</script>
+</body>
+</html>
